@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JAVA Programming Language</title>
+<title>Java Programming Language</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 * { box-sizing: border-box; }
+
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background: radial-gradient(circle at top, #b71c1c, #0b1220);
+    background: radial-gradient(circle at top, #1b1b2f, #0b1220);
     color: #ffffff;
 }
 
@@ -36,7 +37,7 @@ body {
 
 /* Header */
 header {
-    padding: 100px 20px 50px;
+    padding: 80px 20px 40px;
     text-align: center;
 }
 header img {
@@ -44,15 +45,24 @@ header img {
     margin-bottom: 20px;
     filter: drop-shadow(0 8px 14px rgba(0,0,0,0.4));
 }
-header h1 { font-family: 'Montserrat', sans-serif; font-size: 3rem; margin-bottom: 15px; }
-header p { max-width: 800px; margin: auto; line-height: 1.6; opacity: 0.95; }
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+header p {
+    max-width: 800px;
+    margin: auto;
+    line-height: 1.6;
+    opacity: 0.95;
+}
 
 /* Layout */
 .main-content {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 30px;
-    max-width: 1100px;
+    max-width: 1200px;
     margin: auto;
     padding: 50px 20px;
 }
@@ -68,8 +78,14 @@ header p { max-width: 800px; margin: auto; line-height: 1.6; opacity: 0.95; }
     color: #ff8a80;
     margin-bottom: 15px;
 }
-.sidebar ul { list-style-type: disc; padding-left: 20px; }
-.sidebar li { margin-bottom: 10px; }
+.sidebar ul {
+    list-style-type: square;
+    padding-left: 20px;
+}
+.sidebar li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
 
 /* Info Box */
 .info-box {
@@ -84,19 +100,20 @@ header p { max-width: 800px; margin: auto; line-height: 1.6; opacity: 0.95; }
     margin-bottom: 12px;
 }
 
-/* Code Section */
-.code-section {
-    background: rgba(0,0,0,0.35);
-    padding: 25px;
+/* Code Editor Section */
+.code-editor {
+    background: #1e1e2f;
     border-radius: 15px;
+    padding: 25px;
+    font-family: 'Courier New', monospace;
+    color: #c5c5c5;
     overflow-x: auto;
     margin-bottom: 30px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
-pre {
+.code-editor pre {
     margin: 0;
-    font-size: 0.95rem;
     line-height: 1.6;
-    color: #e0e0e0;
 }
 
 /* Footer */
@@ -123,44 +140,62 @@ footer {
 <header>
     <img src="../IMAGES/Java_programming_language_logo.png" alt="Java Logo">
     <h1>Java Programming Language</h1>
-    <p>Java is a high-level, object-oriented, general-purpose programming language that runs on the Java Virtual Machine (JVM).</p>
+    <p>Java is a high-level, object-oriented, general-purpose programming language that runs on the Java Virtual Machine (JVM). Learn key topics and practice writing code in this interactive-style page.</p>
 </header>
 
 <div class="main-content">
 
     <!-- Sidebar: Topics -->
     <div class="sidebar">
-        <h2>Topics</h2>
+        <h2>Topics to Learn in Java</h2>
         <ul>
-            <li>Introduction</li>
-            <li>Object-Oriented Concepts</li>
-            <li>Common Uses</li>
-            <li>Example Code</li>
-            <li>History</li>
+            <li>Java Basics: Variables, Data Types, Operators</li>
+            <li>Control Flow: if, else, switch, loops</li>
+            <li>Object-Oriented Concepts: Classes, Objects, Inheritance, Polymorphism</li>
+            <li>Collections & Data Structures: Arrays, ArrayList, HashMap</li>
+            <li>Exception Handling: try, catch, finally</li>
+            <li>Input/Output: Scanner, File I/O</li>
+            <li>Multithreading & Concurrency</li>
+            <li>Java Libraries & APIs</li>
+            <li>GUI Programming: Swing / JavaFX</li>
         </ul>
     </div>
 
     <!-- Main Content Area -->
     <div>
-        <!-- Info Box -->
+
+        <!-- Java Info Box -->
         <div class="info-box">
             <h3>About Java</h3>
             <p>
-                Java is platform-independent, object-oriented, and secure. It is widely used in Android apps, enterprise software, and backend web systems.
+                Java is platform-independent, object-oriented, secure, and robust. It is widely used in mobile applications (Android), enterprise software, web servers, and cloud services. Java programs run on the Java Virtual Machine (JVM) ensuring portability across platforms.
             </p>
             <ul>
-                <li><strong>Paradigm:</strong> Object-Oriented</li>
+                <li><strong>Paradigm:</strong> Object-Oriented, Concurrent, Class-Based</li>
                 <li><strong>Platform:</strong> JVM (Write Once, Run Anywhere)</li>
-                <li><strong>Strengths:</strong> Security, Scalability, Large Libraries</li>
+                <li><strong>Strengths:</strong> Security, Stability, Large Libraries, Community Support</li>
             </ul>
         </div>
 
-        <!-- Code Segment -->
-        <div class="code-section">
+        <!-- Code Editor Section -->
+        <div class="code-editor">
 <pre>
+// Example: Simple Java Program
 public class HelloWorld {
     public static void main(String[] args) {
+        // Print text to console
         System.out.println("Hello, World!");
+        
+        // Variables
+        int age = 18;
+        double price = 19.99;
+        
+        // Conditional
+        if(age >= 18) {
+            System.out.println("Adult");
+        } else {
+            System.out.println("Minor");
+        }
     }
 }
 </pre>
@@ -170,16 +205,18 @@ public class HelloWorld {
         <div class="info-box">
             <h3>Java Usage & History</h3>
             <p>
-                Java was released in 1995 by Sun Microsystems and later acquired by Oracle. It remains one of the most popular programming languages worldwide.
+                Java was released in 1995 by Sun Microsystems and later acquired by Oracle. Java continues to be one of the most widely-used programming languages in the world, powering:
             </p>
             <ul>
-                <li>Used for Android mobile apps</li>
+                <li>Android mobile apps</li>
                 <li>Enterprise and server applications</li>
-                <li>Backend web systems</li>
+                <li>Web backend systems</li>
+                <li>Games and GUI applications</li>
+                <li>Cloud services and large-scale applications</li>
             </ul>
         </div>
-    </div>
 
+    </div>
 </div>
 
 <footer>
