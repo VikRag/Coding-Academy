@@ -1,227 +1,916 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Java Programming Language</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Programming Language</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> <!-- For code highlighting -->
 
-<style>
-* { box-sizing: border-box; }
+    <!-- Prism.js for code highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
-body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: radial-gradient(circle at top, #1b1b2f, #0b1220);
-    color: #ffffff;
-}
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-/* Back Button */
-.back-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-}
-.back-btn a {
-    background: rgba(255,255,255,0.15);
-    padding: 12px 18px;
-    border-radius: 12px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
-}
-.back-btn a:hover { background: rgba(255,255,255,0.35); }
+    <style>
+    /* =======================
+       GLOBAL STYLES
+    ======================= */
+    :root {
+        --primary-bg: #1b1b2f;
+        --secondary-bg: #0b1220;
+        --accent-color: #ff8a80;
+        --text-color: #ffffff;
+        --code-bg: #1e1e2f;
+        --sidebar-bg: rgba(255,255,255,0.12);
+        --hover-bg: rgba(255,255,255,0.35);
+    }
 
-/* Header */
-header {
-    padding: 80px 20px 40px;
-    text-align: center;
-}
-header img {
-    max-width: 100px;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 8px 14px rgba(0,0,0,0.4));
-}
-header h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 3rem;
-    margin-bottom: 10px;
-}
-header p {
-    max-width: 800px;
-    margin: auto;
-    line-height: 1.6;
-    opacity: 0.95;
-}
+    * { box-sizing: border-box; }
 
-/* Layout */
-.main-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 30px;
-    max-width: 1200px;
-    margin: auto;
-    padding: 50px 20px;
-}
+    body {
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        background: radial-gradient(circle at top, var(--primary-bg), var(--secondary-bg));
+        color: var(--text-color);
+    }
 
-/* Sidebar Topics */
-.sidebar {
-    background: rgba(255,255,255,0.12);
-    border-radius: 20px;
-    padding: 25px;
-}
-.sidebar h2 {
-    font-family: 'Montserrat', sans-serif;
-    color: #ff8a80;
-    margin-bottom: 15px;
-}
-.sidebar ul {
-    list-style-type: square;
-    padding-left: 20px;
-}
-.sidebar li {
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
+    /* =======================
+       NAVIGATION BUTTONS
+    ======================= */
+    .nav-buttons {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 99;
+        pointer-events: none; /* Allows clicks through empty space */
+    }
 
-/* Info Box */
-.info-box {
-    background: rgba(255,255,255,0.12);
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 30px;
-}
-.info-box h3 {
-    font-family: 'Montserrat', sans-serif;
-    color: #ff5252;
-    margin-bottom: 12px;
-}
+    .back-btn,
+    .next-btn {
+        pointer-events: all; /* Re-enable clicks on the buttons */
+    }
 
-/* Code Editor Section */
-.code-editor {
-    background: #1e1e2f;
-    border-radius: 15px;
-    padding: 25px;
-    font-family: 'Courier New', monospace;
-    color: #c5c5c5;
-    overflow-x: auto;
-    margin-bottom: 30px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-}
-.code-editor pre {
-    margin: 0;
-    line-height: 1.6;
-}
+    .back-btn a,
+    .next-btn a {
+        background: var(--sidebar-bg);
+        padding: 12px 18px;
+        border-radius: 12px;
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+        display: inline-block;
+    }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 50px 20px;
-    font-size: 0.9rem;
-    opacity: 0.7;
-}
+    .back-btn a:hover,
+    .next-btn a:hover {
+        background: var(--hover-bg);
+    }
 
-/* Responsive */
-@media(max-width:900px){
-    .main-content { grid-template-columns: 1fr; }
-}
-</style>
+    /* Optional: Larger tap area on mobile */
+    @media (max-width: 600px) {
+        .back-btn a,
+        .next-btn a {
+            padding: 14px 20px;
+            font-size: 1.1rem;
+        }
+    }
+
+    /* HEADER */
+    header {
+        padding: 100px 20px 40px; /* Extra top padding for fixed nav buttons */
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.3);
+        z-index: -1;
+    }
+    header img {
+        max-width: 200px; /* Made the Java logo significantly bigger */
+        margin-bottom: 25px;
+        animation: fadeIn 1s ease;
+    }
+    header h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3.5rem;
+        margin: 0;
+        animation: slideIn 1s ease;
+    }
+    header p {
+        max-width: 900px;
+        margin: 20px auto 0;
+        line-height: 1.7;
+        font-size: 1.1rem;
+        animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes slideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* SEARCH BAR */
+    .search-bar {
+        max-width: 600px;
+        margin: 20px auto;
+        position: relative;
+    }
+    .search-bar input {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border-radius: 30px;
+        border: none;
+        background: var(--sidebar-bg);
+        color: var(--text-color);
+        font-size: 1rem;
+    }
+    .search-bar input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+    .search-bar i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--accent-color);
+    }
+
+    /* LAYOUT */
+    .main-content {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 40px;
+        max-width: 1400px;
+        margin: auto;
+        padding: 40px 20px;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        background: var(--sidebar-bg);
+        border-radius: 20px;
+        padding: 30px;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .sidebar h2 {
+        font-family: 'Montserrat', sans-serif;
+        color: var(--accent-color);
+        margin-bottom: 25px;
+        font-size: 1.5rem;
+    }
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+    .sidebar li {
+        margin-bottom: 15px;
+    }
+    .sidebar a {
+        color: var(--text-color);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s;
+    }
+    .sidebar a i {
+        margin-right: 10px;
+        color: var(--accent-color);
+    }
+    .sidebar a:hover {
+        color: var(--accent-color);
+    }
+
+    /* CONTENT SECTIONS */
+    .content {
+        animation: fadeIn 1s ease;
+    }
+    .section {
+        margin-bottom: 60px;
+        background: var(--sidebar-bg);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: transform 0.3s;
+    }
+    .section:hover {
+        transform: translateY(-5px);
+    }
+    .section h2 {
+        font-family: 'Montserrat', sans-serif;
+        color: var(--accent-color);
+        margin-bottom: 20px;
+        font-size: 2rem;
+    }
+    .section h3 {
+        color: #ff5252;
+        margin: 25px 0 10px;
+        font-size: 1.4rem;
+    }
+    .section p, .section ul {
+        line-height: 1.7;
+        font-size: 1.05rem;
+    }
+    .section ul {
+        padding-left: 20px;
+    }
+    .section ul li {
+        margin-bottom: 10px;
+        list-style-type: disc;
+    }
+
+    /* ACCORDION FOR SUBTOPICS */
+    .accordion {
+        cursor: pointer;
+        padding: 15px;
+        background: var(--code-bg);
+        border-radius: 10px;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+    .accordion:hover {
+        background: rgba(255,255,255,0.1);
+    }
+    .panel {
+        display: none;
+        padding: 15px;
+        background: var(--code-bg);
+        border-radius: 0 0 10px 10px;
+        margin-top: -10px;
+    }
+    .panel p {
+        margin-bottom: 15px;
+    }
+
+    /* CODE BOX */
+    .code-box {
+        background: var(--code-bg);
+        padding: 20px;
+        border-radius: 12px;
+        overflow-x: auto;
+        margin: 15px 0;
+        font-family: 'Source Code Pro', monospace;
+    }
+    .code-box pre {
+        margin: 0;
+    }
+
+    /* FOOTER */
+    footer {
+        text-align: center;
+        padding: 50px 20px;
+        opacity: 0.8;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width: 900px) {
+        .main-content {
+            grid-template-columns: 1fr;
+        }
+        .sidebar {
+            position: relative;
+            top: 0;
+        }
+        header h1 {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media (max-width: 600px) {
+        header {
+            padding: 120px 20px 40px;
+        }
+        header img {
+            max-width: 160px;
+        }
+    }
+    </style>
 </head>
 
 <body>
 
-<div class="back-btn">
-    <a href="../general-purpose.html">← Back to Languages</a>
+<!-- NAVIGATION BUTTONS -->
+<div class="nav-buttons">
+    <div class="back-btn">
+        <a href="../general-purpose.html">← Back</a>
+    </div>
+    
+    <div class="next-btn">
+        <a href="java-tutorial.html">Java Tutorial →</a>
+    </div>
 </div>
 
+<!-- HEADER -->
 <header>
     <img src="../IMAGES/Java_programming_language_logo.png" alt="Java Logo">
     <h1>Java Programming Language</h1>
-    <p>Java is a high-level, object-oriented, general-purpose programming language that runs on the Java Virtual Machine (JVM). Learn key topics and practice writing code in this interactive-style page.</p>
+    <p>
+        Java is a high-level, object-oriented programming language designed to run on
+        the Java Virtual Machine (JVM). Explore the fundamentals and advanced topics with interactive elements, detailed explanations, and commented code examples below.
+    </p>
 </header>
 
-<div class="main-content">
-
-    <!-- Sidebar: Topics -->
-    <div class="sidebar">
-        <h2>Topics to Learn in Java</h2>
-        <ul>
-            <li>Java Basics: Variables, Data Types, Operators</li>
-            <li>Control Flow: if, else, switch, loops</li>
-            <li>Object-Oriented Concepts: Classes, Objects, Inheritance, Polymorphism</li>
-            <li>Collections & Data Structures: Arrays, ArrayList, HashMap</li>
-            <li>Exception Handling: try, catch, finally</li>
-            <li>Input/Output: Scanner, File I/O</li>
-            <li>Multithreading & Concurrency</li>
-            <li>Java Libraries & APIs</li>
-            <li>GUI Programming: Swing / JavaFX</li>
-        </ul>
-    </div>
-
-    <!-- Main Content Area -->
-    <div>
-
-        <!-- Java Info Box -->
-        <div class="info-box">
-            <h3>About Java</h3>
-            <p>
-                Java is platform-independent, object-oriented, secure, and robust. It is widely used in mobile applications (Android), enterprise software, web servers, and cloud services. Java programs run on the Java Virtual Machine (JVM) ensuring portability across platforms.
-            </p>
-            <ul>
-                <li><strong>Paradigm:</strong> Object-Oriented, Concurrent, Class-Based</li>
-                <li><strong>Platform:</strong> JVM (Write Once, Run Anywhere)</li>
-                <li><strong>Strengths:</strong> Security, Stability, Large Libraries, Community Support</li>
-            </ul>
-        </div>
-
-        <!-- Code Editor Section -->
-        <div class="code-editor">
-<pre>
-// Example: Simple Java Program
-public class HelloWorld {
-    public static void main(String[] args) {
-        // Print text to console
-        System.out.println("Hello, World!");
-        
-        // Variables
-        int age = 18;
-        double price = 19.99;
-        
-        // Conditional
-        if(age >= 18) {
-            System.out.println("Adult");
-        } else {
-            System.out.println("Minor");
-        }
-    }
-}
-</pre>
-        </div>
-
-        <!-- Additional Info Box -->
-        <div class="info-box">
-            <h3>Java Usage & History</h3>
-            <p>
-                Java was released in 1995 by Sun Microsystems and later acquired by Oracle. Java continues to be one of the most widely-used programming languages in the world, powering:
-            </p>
-            <ul>
-                <li>Android mobile apps</li>
-                <li>Enterprise and server applications</li>
-                <li>Web backend systems</li>
-                <li>Games and GUI applications</li>
-                <li>Cloud services and large-scale applications</li>
-            </ul>
-        </div>
-
-    </div>
+<!-- SEARCH BAR -->
+<div class="search-bar">
+    <input type="text" id="searchInput" onkeyup="searchSections()" placeholder="Search topics...">
+    <i class="fas fa-search"></i>
 </div>
 
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>Java Topics</h2>
+    <ul>
+        <li><a href="#basics"><i class="fas fa-book-open"></i> Basics</a></li>
+        <li><a href="#methods"><i class="fas fa-cogs"></i> Methods</a></li>
+        <li><a href="#oop"><i class="fas fa-object-group"></i> Object-Oriented Programming</a></li>
+        <li><a href="#advanced"><i class="fas fa-rocket"></i> Advanced Topics</a></li>
+    </ul>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- BASICS -->
+<section id="basics" class="section">
+    <h2>Basics</h2>
+    <p>Core concepts of Java programming including variables, operators, control flow, loops, arrays, and basic syntax. These form the foundation for writing any Java program.</p>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Introduction & Syntax</div>
+    <div class="panel">
+        <p>Java is a platform-independent language developed by Sun Microsystems (now Oracle) in 1995. It follows the "Write Once, Run Anywhere" principle thanks to the JVM, which compiles Java code into bytecode that can run on any device with a JVM.</p>
+        <p>Basic syntax requires every program to be in a class, and execution begins in the main method. Java is case-sensitive and uses semicolons to end statements.</p>
+        <ul>
+            <li><strong>Introduction:</strong> Java is platform-independent and follows “Write Once, Run Anywhere.” It's widely used for web, mobile, and enterprise applications.</li>
+            <li><strong>Syntax:</strong> Programs are inside classes; execution starts at the main method. Comments can be single-line (//) or multi-line (/* */).</li>
+            <li><strong>Output:</strong> Use System.out.println() to print to the console. For formatted output, use System.out.printf().</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">public class HelloWorld {
+    // This is the main method where execution starts
+    public static void main(String[] args) {
+        // Print a message to the console
+        System.out.println("Hello, World!");  // Outputs: Hello, World!
+        
+        // Formatted output example
+        System.out.printf("Java version: %s\n", "21");  // Outputs: Java version: 21
+    }
+}</code></pre>
+        </div>
+        <p>In the code above, the main method is static so it can be called without creating an object. The args parameter allows command-line arguments.</p>
+        <p><strong>Path to Expertise:</strong> Start here as a complete beginner. Master the basic "Hello World" program, understand syntax rules, and practice outputting text. Refer to W3Schools Java Intro, Syntax, Output, and Comments sections for clear examples and "Try it Yourself" editors. Complete the exercises at the end of each chapter to reinforce basics.</p>
+    </div>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Variables & Operators</div>
+    <div class="panel">
+        <p>Variables store data and must be declared with a type. Java has primitive types like int, double, char, boolean, and reference types like String.</p>
+        <p>Operators include arithmetic (+, -, *, /, %), comparison (==, !=, >, <), logical (&&, ||, !), and assignment (=, +=, etc.).</p>
+        <ul>
+            <li><strong>Variables:</strong> Store numbers, text, and boolean values. Must be initialized before use in some contexts.</li>
+            <li><strong>Operators:</strong> Perform arithmetic, comparison, and logical operations. Operator precedence follows PEMDAS.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">// Declare and initialize variables
+int x = 5;  // Integer variable
+double y = 10.5;  // Floating-point variable
+boolean isTrue = true;  // Boolean variable
+String text = "Java";  // String variable
+
+// Arithmetic operators
+int sum = x + (int)y;  // Cast y to int, sum = 15
+double product = x * y;  // product = 52.5
+
+// Comparison and logical operators
+if (x > 0 && isTrue) {  // Checks if x is positive AND isTrue is true
+    System.out.println("Positive and true");  // Outputs if condition met
+}
+
+// Assignment operators
+x += 3;  // x now equals 8</code></pre>
+        </div>
+        <p>Note: Java is strongly typed, so implicit type conversions are limited. Use casting for explicit conversions.</p>
+        <p><strong>Path to Expertise:</strong> Practice declaring variables of all primitive types and using operators. Experiment with type casting. W3Schools covers this in Variables, Data Types, Type Casting, Operators, Strings, Math, and Booleans. Do the exercises and use the online compiler to test variations.</p>
+    </div>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Control Flow & Loops</div>
+    <div class="panel">
+        <p>Control flow allows decision-making and repetition. If-else for conditions, switch for multiple cases, loops for iteration.</p>
+        <ul>
+            <li><strong>If / Else:</strong> Conditional statements for decision-making. Can be nested or use else-if chains.</li>
+            <li><strong>Loops:</strong> Repeat code using for (counted), while (condition-based), or do-while (post-check).</li>
+            <li><strong>Switch:</strong> Handles multiple conditions based on a value.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">// If-else example
+int num = 10;
+if (num > 0) {
+    System.out.println("Positive");  // Executes if num > 0
+} else if (num < 0) {
+    System.out.println("Negative");
+} else {
+    System.out.println("Zero");
+}
+
+// For loop: iterates a fixed number of times
+for (int i = 0; i < 5; i++) {  // i from 0 to 4
+    System.out.println(i);  // Outputs 0 to 4
+}
+
+// While loop: checks condition before execution
+int count = 0;
+while (count < 3) {
+    System.out.println("Count: " + count);
+    count++;  // Increment to avoid infinite loop
+}
+
+// Do-while: executes at least once
+do {
+    System.out.println("Executes once");
+} while (false);  // Condition false, but runs once
+
+// Switch statement
+switch (num) {
+    case 10:
+        System.out.println("Ten");
+        break;  // Exit switch
+    default:
+        System.out.println("Other");
+}</code></pre>
+        </div>
+        <p>Always include break in switch cases to prevent fall-through. Loops can use break to exit early or continue to skip iterations.</p>
+        <p><strong>Path to Expertise:</strong> Build simple programs like calculators or number guessers using if-else and loops. W3Schools sections: If...Else, Switch, While Loop, For Loop, Break/Continue. Practice exercises and "How To" examples like Even/Odd or Positive/Negative checks.</p>
+    </div>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Strings & Arrays</div>
+    <div class="panel">
+        <p>Strings are immutable objects with methods like length(), substring(), concat(). Arrays are fixed-size collections of the same type.</p>
+        <ul>
+            <li><strong>Strings:</strong> Represent text and have useful built-in methods like toUpperCase(), equals().</li>
+            <li><strong>Arrays:</strong> Store multiple values of the same type. Can be multi-dimensional.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">// String operations
+String greeting = "Hello";  // Create string
+String full = greeting.concat(" World");  // "Hello World"
+int len = full.length();  // 11
+String upper = full.toUpperCase();  // "HELLO WORLD"
+boolean equals = greeting.equals("hello");  // false (case-sensitive)
+
+// Array declaration and initialization
+int[] numbers = {1, 2, 3, 4, 5};  // Fixed-size array
+String[] fruits = new String[3];  // Array of size 3
+fruits[0] = "Apple";  // Assign value
+
+// Accessing and looping through array
+for (int num : numbers) {  // Enhanced for loop
+    System.out.println(num);  // Outputs 1 to 5
+}
+
+// Multi-dimensional array
+int[][] matrix = {{1, 2}, {3, 4}};  // 2x2 matrix
+System.out.println(matrix[1][0]);  // 3</code></pre>
+        </div>
+        <p>Strings are compared with equals() not ==, as == checks reference. Arrays can throw ArrayIndexOutOfBoundsException if accessed out of bounds.</p>
+        <p><strong>Path to Expertise:</strong> Manipulate strings (e.g., reverse, count vowels) and arrays (sort, find max/min). W3Schools: Strings, Arrays. Use "How To" for tasks like Reverse String, Palindrome Check, Sort Array.</p>
+    </div>
+</section>
+
+<!-- METHODS -->
+<section id="methods" class="section">
+    <h2>Methods</h2>
+    <p>Methods are reusable blocks of code that can take parameters and return values. They promote code modularity and reusability.</p>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Methods & Parameters</div>
+    <div class="panel">
+        <p>Methods are defined with access modifier, return type, name, and parameters. They can be static (class-level) or instance (object-level).</p>
+        <ul>
+            <li><strong>Methods:</strong> Perform specific tasks and improve code organization. Can return values or be void.</li>
+            <li><strong>Parameters:</strong> Pass data into methods. Can have default values in some contexts, but not in standard Java methods.</li>
+            <li><strong>Varargs:</strong> Allow variable number of arguments using ...</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">// Simple method with parameters
+public static void greet(String name) {  // void return type
+    System.out.println("Hello, " + name);  // Use parameter
+}
+
+// Method with return value
+public static int add(int a, int b) {
+    return a + b;  // Return sum
+}
+
+// Varargs example
+public static void printNumbers(int... nums) {  // Variable arguments
+    for (int num : nums) {
+        System.out.println(num);
+    }
+}
+
+// Calling methods
+public static void main(String[] args) {
+    greet("Alice");  // Outputs: Hello, Alice
+    int sum = add(5, 3);  // sum = 8
+    printNumbers(1, 2, 3);  // Outputs 1,2,3
+}</code></pre>
+        </div>
+        <p>Parameters are passed by value in Java. For objects, this means the reference is copied.</p>
+        <p><strong>Path to Expertise:</strong> Create utility methods for common tasks. W3Schools: Methods, Method Parameters, Scope.</p>
+    </div>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Overloading & Recursion</div>
+    <div class="panel">
+        <p>Method overloading allows multiple methods with the same name but different signatures. Recursion is when a method calls itself.</p>
+        <ul>
+            <li><strong>Overloading:</strong> Same method name with different parameters. Resolved at compile time.</li>
+            <li><strong>Recursion:</strong> Method calling itself with a base case to prevent stack overflow.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">// Overloading examples
+public static int add(int a, int b) {  // Two ints
+    return a + b;
+}
+public static double add(double a, double b) {  // Two doubles
+    return a + b;
+}
+public static int add(int a, int b, int c) {  // Three ints
+    return a + b + c;
+}
+
+// Recursion example: Factorial
+public static int factorial(int n) {
+    if (n <= 1) {  // Base case
+        return 1;
+    }
+    return n * factorial(n - 1);  // Recursive call
+}
+
+// Usage
+public static void main(String[] args) {
+    System.out.println(add(2, 3));  // 5 (int version)
+    System.out.println(add(2.5, 3.5));  // 6.0 (double version)
+    System.out.println(factorial(5));  // 120
+}</code></pre>
+        </div>
+        <p>Overloading improves readability. Recursion is useful for problems like tree traversal but can be inefficient for large depths.</p>
+        <p><strong>Path to Expertise:</strong> Implement recursive solutions (factorial, Fibonacci) and overloaded methods. W3Schools: Method Overloading, Recursion. Practice with "How To" like Factorial or Fibonacci.</p>
+    </div>
+</section>
+
+<!-- OOP -->
+<section id="oop" class="section">
+    <h2>Object-Oriented Programming</h2>
+    <p>Java models real-world objects using classes and objects. Key OOP principles include encapsulation, inheritance, polymorphism, and abstraction.</p>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Classes & Constructors</div>
+    <div class="panel">
+        <p>Classes are blueprints defining fields and methods. Constructors initialize objects and can be overloaded.</p>
+        <ul>
+            <li><strong>Classes:</strong> Blueprints for creating objects. Can have fields, methods, constructors.</li>
+            <li><strong>Constructors:</strong> Initialize new objects. Default constructor if none defined.</li>
+            <li><strong>Encapsulation:</strong> Use private fields with public getters/setters.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">public class Car {
+    // Private fields for encapsulation
+    private String model;
+    private int year;
+    
+    // Default constructor
+    public Car() {
+        this.model = "Unknown";
+        this.year = 0;
+    }
+    
+    // Parameterized constructor
+    public Car(String model, int year) {
+        this.model = model;  // 'this' refers to instance field
+        this.year = year;
+    }
+    
+    // Getter method
+    public String getModel() {
+        return model;
+    }
+    
+    // Setter method
+    public void setYear(int year) {
+        this.year = year;
+    }
+}
+
+// Usage
+public static void main(String[] args) {
+    Car myCar = new Car("Tesla", 2023);  // Create object
+    System.out.println(myCar.getModel());  // Tesla
+}</code></pre>
+        </div>
+        <p>'this' keyword distinguishes instance variables from parameters. Constructors can call each other using this().</p>
+        <p><strong>Path to Expertise:</strong> Model real-world entities (e.g., BankAccount, Person). W3Schools: Classes/Objects, Constructors, Modifiers, Encapsulation.</p>
+    </div>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Inheritance & Polymorphism</div>
+    <div class="panel">
+        <p>Inheritance allows subclasses to inherit from superclasses. Polymorphism enables objects to be treated as instances of their parent class.</p>
+        <ul>
+            <li><strong>Inheritance:</strong> Reuse code from other classes using extends. Supports single inheritance.</li>
+            <li><strong>Polymorphism:</strong> Methods behave differently based on object type. Achieved via overriding.</li>
+            <li><strong>Super:</strong> Call superclass methods or constructors.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">// Superclass
+public class Vehicle {
+    public void drive() {
+        System.out.println("Driving vehicle");
+    }
+}
+
+// Subclass with inheritance
+public class ElectricCar extends Vehicle {  // Inherits from Vehicle
+    @Override  // Annotation for overriding
+    public void drive() {  // Polymorphic method
+        System.out.println("Driving electrically");
+    }
+    
+    public void charge() {  // New method
+        System.out.println("Charging");
+    }
+}
+
+// Usage demonstrating polymorphism
+public static void main(String[] args) {
+    Vehicle car = new ElectricCar();  // Upcasting
+    car.drive();  // Outputs: Driving electrically (runtime polymorphism)
+    // car.charge(); // Not accessible via Vehicle reference
+}</code></pre>
+        </div>
+        <p>@Override ensures correct overriding. Final methods/classes prevent inheritance/overriding.</p>
+        <p><strong>Path to Expertise:</strong> Build class hierarchies (e.g., Animal > Dog/Cat). W3Schools: Inheritance, Polymorphism, Inner Classes.</p>
+    </div>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Abstraction & Interfaces</div>
+    <div class="panel">
+        <p>Abstraction hides details using abstract classes or interfaces. Interfaces define contracts with default methods since Java 8.</p>
+        <ul>
+            <li><strong>Abstraction:</strong> Hide complex implementation details using abstract classes (can have concrete methods).</li>
+            <li><strong>Interfaces:</strong> Define methods classes must implement. Supports multiple inheritance.</li>
+            <li><strong>Default methods:</strong> Provide implementation in interfaces.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">// Abstract class
+abstract class Shape {
+    abstract double area();  // Abstract method
+    public void display() {  // Concrete method
+        System.out.println("Displaying shape");
+    }
+}
+
+// Interface
+interface Drivable {
+    void drive();  // Abstract method
+    default void stop() {  // Default method
+        System.out.println("Stopping");
+    }
+}
+
+// Implementing class
+public class Circle extends Shape implements Drivable {
+    double radius;
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+    
+    @Override
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+    
+    @Override
+    public void drive() {
+        System.out.println("Driving circle?");  // Hypothetical
+    }
+}
+
+// Usage
+public static void main(String[] args) {
+    Circle c = new Circle(5);
+    System.out.println(c.area());  // ~78.54
+    c.drive();  // Driving circle?
+    c.stop();  // Stopping
+}</code></pre>
+        </div>
+        <p>Abstract classes can have constructors; interfaces cannot (pre-Java 8). Use interfaces for multiple behaviors.</p>
+        <p><strong>Path to Expertise:</strong> Design systems with abstract classes and interfaces (e.g., shapes, vehicles). W3Schools: Abstraction, Interface, Enum.</p>
+    </div>
+</section>
+
+<!-- ADVANCED -->
+<section id="advanced" class="section">
+    <h2>Advanced Topics</h2>
+    <p>Advanced features of Java for robust and interactive applications, including input handling, collections, error management, concurrency, and I/O.</p>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">User Input & Collections</div>
+    <div class="panel">
+        <p>User input uses Scanner for console reading. Collections framework provides dynamic data structures like List, Set, Map.</p>
+        <ul>
+            <li><strong>User Input:</strong> Use Scanner class to read input from users. Supports nextInt(), nextLine(), etc.</li>
+            <li><strong>Collections:</strong> Store groups of objects using ArrayList (resizable array), HashSet (unique elements), HashMap (key-value pairs).</li>
+            <li><strong>Generics:</strong> Type-safe collections, e.g., ArrayList&lt;String&gt;.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">import java.util.Scanner;  // Import for input
+import java.util.ArrayList;  // Import for List
+import java.util.HashMap;  // Import for Map
+
+// User input
+Scanner scanner = new Scanner(System.in);  // Create scanner
+System.out.print("Enter name: ");
+String name = scanner.nextLine();  // Read string
+System.out.print("Enter age: ");
+int age = scanner.nextInt();  // Read int
+
+// Collections: ArrayList
+ArrayList<String> fruits = new ArrayList<>();  // Generic list
+fruits.add("Apple");  // Add element
+fruits.add("Banana");
+fruits.remove(0);  // Remove by index
+for (String fruit : fruits) {  // Iterate
+    System.out.println(fruit);  // Outputs Banana
+}
+
+// HashMap
+HashMap<String, Integer> scores = new HashMap<>();
+scores.put("Alice", 90);  // Add key-value
+int aliceScore = scores.get("Alice");  // 90</code></pre>
+        </div>
+        <p>Close scanner with scanner.close() to prevent resource leaks. Collections are in java.util package.</p>
+        <p><strong>Path to Expertise:</strong> Build programs with user interaction and data storage. W3Schools: User Input, ArrayList, LinkedList, HashMap, Iterator.</p>
+    </div>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">Exceptions & Threads</div>
+    <div class="panel">
+        <p>Exceptions handle runtime errors. Threads enable concurrency for multi-tasking.</p>
+        <ul>
+            <li><strong>Exceptions:</strong> Handle errors gracefully using try-catch. Can throw custom exceptions.</li>
+            <li><strong>Threads:</strong> Execute multiple tasks concurrently using Thread class or Runnable interface.</li>
+            <li><strong>Synchronization:</strong> Use synchronized to prevent race conditions.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">// Exception handling
+try {
+    int divide = 10 / 0;  // ArithmeticException
+} catch (ArithmeticException e) {  // Catch specific exception
+    System.out.println("Error: " + e.getMessage());  // Division by zero
+} finally {  // Always executes
+    System.out.println("Cleanup");
+}
+
+// Custom exception
+class MyException extends Exception {
+    public MyException(String msg) {
+        super(msg);
+    }
+}
+
+// Throwing exception
+public static void checkAge(int age) throws MyException {
+    if (age < 18) {
+        throw new MyException("Too young");
+    }
+}
+
+// Thread example
+class MyThread extends Thread {
+    public void run() {  // Thread execution
+        System.out.println("Thread running");
+    }
+}
+
+// Usage
+public static void main(String[] args) {
+    MyThread t = new MyThread();
+    t.start();  // Start thread
+    // Runnable alternative: new Thread(() -> { /* code */ }).start();
+}</code></pre>
+        </div>
+        <p>Checked exceptions must be handled or declared. Threads can use join() to wait for completion.</p>
+        <p><strong>Path to Expertise:</strong> Create multi-threaded apps and robust error handling. W3Schools: Exceptions, Threads, Lambda.</p>
+    </div>
+    
+    <div class="accordion" onclick="toggleAccordion(this)">File Handling</div>
+    <div class="panel">
+        <p>File handling for reading/writing data. Use try-with-resources for auto-closing.</p>
+        <ul>
+            <li><strong>File Handling:</strong> Read and write files for permanent storage using File, FileReader, FileWriter, etc.</li>
+            <li><strong>Buffered I/O:</strong> For efficiency, use BufferedReader/Writer.</li>
+            <li><strong>Paths:</strong> Java NIO for modern file operations.</li>
+        </ul>
+        <div class="code-box">
+            <pre><code class="language-java">import java.io.*;  // Import I/O classes
+import java.nio.file.*;  // For NIO
+
+// Writing to file
+try (FileWriter writer = new FileWriter("example.txt")) {  // Try-with-resources
+    writer.write("Hello, File!");  // Write string
+} catch (IOException e) {
+    System.out.println("Write error: " + e);
+}
+
+// Reading from file
+try (BufferedReader reader = new BufferedReader(new FileReader("example.txt"))) {
+    String line;
+    while ((line = reader.readLine()) != null) {  // Read line by line
+        System.out.println(line);  // Outputs: Hello, File!
+    }
+} catch (IOException e) {
+    System.out.println("Read error: " + e);
+}
+
+// NIO example: Delete file
+Path path = Paths.get("example.txt");
+Files.deleteIfExists(path);  // Delete if exists</code></pre>
+        </div>
+        <p>Handle IOExceptions. NIO provides non-blocking I/O and better performance for large files.</p>
+        <p><strong>Path to Expertise:</strong> Build file-based apps (e.g., todo list saver). W3Schools: File Handling, Read/Write/Create/Delete Files.</p>
+    </div>
+</section>
+
+<!-- OVERALL PATH -->
+<section class="section">
+    <h2>How to Become a Java Expert Using This Site & W3Schools</h2>
+    <p>This website provides foundational explanations and code examples. To go from beginner to expert:</p>
+    <ul>
+        <li><strong>Step 1: Basics</strong> – Master syntax, variables, control flow, and arrays here, then reinforce on W3Schools with "Try it Yourself" editors.</li>
+        <li><strong>Step 2: Methods & OOP</strong> – Build modular, object-oriented code.</li>
+        <li><strong>Step 3: Advanced</strong> – Handle real-world scenarios with collections, exceptions, threads, and files.</li>
+        <li><strong>Practice Daily:</strong> Use W3Schools Java Exercises (hundreds available), Java Quiz, and Java How To's for practical tasks.</li>
+        <li><strong>Build Projects:</strong> Apply knowledge in small apps (calculator → bank system → multi-threaded chat).</li>
+        <li><strong>Test Knowledge:</strong> Take the W3Schools Java Quiz and aim for certification.</li>
+        <li><strong>Reference:</strong> Use W3Schools Java Reference for keywords, methods, and quick lookups.</li>
+    </ul>
+    <p>Consistent practice (1-2 hours daily) + exercises + projects will make you an expert in 3-6 months. Visit <a href="https://www.w3schools.com/java/" target="_blank">W3Schools Java Tutorial</a> for the full structured path.</p>
+</section>
+
+</div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-    © 2025 • Java Programming Language Page
+    © 2025 • Java Programming Language • Powered by xAI
 </footer>
+
+<script>
+    // Accordion Toggle
+    function toggleAccordion(element) {
+        const panel = element.nextElementSibling;
+        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Search Functionality
+    function searchSections() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            const text = section.textContent.toLowerCase();
+            section.style.display = text.includes(input) ? 'block' : 'none';
+        });
+    }
+
+    // Smooth Scroll for Sidebar Links
+    document.querySelectorAll('.sidebar a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
 
 </body>
 </html>
