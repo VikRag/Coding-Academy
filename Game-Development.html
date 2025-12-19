@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Development Languages</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: radial-gradient(circle at top, #2b5876, #4e4376); /* New: Vibrant blue-purple gradient for an exciting game dev theme */
+    color: #ffffff;
+}
+
+/* Back Button */
+#back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+#back-button button {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#back-button button:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+/* Hero */
+header {
+    padding: 100px 20px 80px;
+    text-align: center;
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 21px;
+}
+
+header p {
+    max-width: 850px;
+    margin: auto;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* Sections */
+section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 50px;
+}
+
+/* Language Cards Grid */
+.language-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px;
+}
+
+.language-card {
+    background: rgba(255,255,255,0.12);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.language-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 35px 65px rgba(0,0,0,0.55);
+}
+
+/* Accent Colors - Game Dev Specific */
+.language-card.csharp { border-top: 6px solid #68217a; } /* C#: Iconic purple */
+.language-card.cpp { border-top: 6px solid #00599c; } /* C++: Official blue from ISO logo */
+.language-card.lua { border-top: 6px solid #000080; } /* Lua: Navy blue (official branding) */
+
+/* Image Placeholder */
+.language-image {
+    height: 160px;
+    background: linear-gradient(135deg, #4e4376, #2b5876);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+.language-image img {
+    max-height: 90px;
+    max-width: 90%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+}
+
+/* Card Content */
+.language-content {
+    padding: 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.language-content h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.language-card.csharp h3 { color: #68217a; }
+.language-card.cpp h3 { color: #00599c; }
+.language-card.lua h3 { color: #000080; }
+
+.language-content p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Button */
+.language-content button {
+    align-self: flex-start;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.language-card.csharp button {
+    background: linear-gradient(135deg, #68217a, #512062);
+}
+
+.language-card.cpp button {
+    background: linear-gradient(135deg, #00599c, #00467f);
+}
+
+.language-card.lua button {
+    background: linear-gradient(135deg, #000080, #00005d);
+}
+
+.language-content button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Details */
+.details {
+    margin-top: 25px;
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.details ul {
+    padding-left: 20px;
+}
+
+.details li {
+    margin-bottom: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div id="back-button">
+    <button onclick="window.location.href='index.html';">← Back</button>
+</div>
+
+<header>
+    <h1>Game Development Languages</h1>
+    <p>
+        Discover powerful programming languages widely used in game development, from high-performance engines to lightweight scripting.
+    </p>
+</header>
+
+<section>
+    <h2>Explore the Languages</h2>
+
+    <div class="language-grid">
+
+        <!-- C# -->
+        <div class="language-card csharp">
+            <div class="language-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/C_Sharp_logo.png" alt="C# Logo">
+            </div>
+            <div class="language-content">
+                <h3>C#</h3>
+                <p>
+                    A modern, object-oriented language powering Unity, one of the most popular game engines for 2D and 3D games.
+                </p>
+                <button onclick="window.location.href='CSharp.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Unity game development</li>
+                        <li><strong>Paradigm:</strong> Object-oriented, event-driven</li>
+                        <li><strong>Strength:</strong> Productivity and integration with Unity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- C++ -->
+        <div class="language-card cpp">
+            <div class="language-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++ Logo">
+            </div>
+            <div class="language-content">
+                <h3>C++</h3>
+                <p>
+                    The industry standard for high-performance games, used in engines like Unreal Engine, Godot (core), and many AAA titles.
+                </p>
+                <button onclick="window.location.href='CPP.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Game engines and performance-critical games</li>
+                        <li><strong>Paradigm:</strong> Multi-paradigm</li>
+                        <li><strong>Strength:</strong> Speed and low-level control</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lua -->
+        <div class="language-card lua">
+            <div class="language-image">
+                <img src="https://www.lua.org/images/lua-logo.gif" alt="Lua Logo">
+            </div>
+            <div class="language-content">
+                <h3>Lua</h3>
+                <p>
+                    A lightweight, embeddable scripting language popular in games for modding and logic (e.g., Roblox, World of Warcraft).
+                </p>
+                <button onclick="window.location.href='Lua.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Game scripting and extensions</li>
+                        <li><strong>Paradigm:</strong> Multi-paradigm (scripting)</li>
+                        <li><strong>Strength:</strong> Simplicity and fast embedding</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+© 2025 • Game Development Languages Project
+</footer>
+
+</body>
+</html>

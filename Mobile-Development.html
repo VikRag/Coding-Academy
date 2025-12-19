@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Development Languages</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: radial-gradient(circle at top, #134e5e, #071a24); /* New: Deep green-blue gradient for a vibrant, mobile/tech-inspired feel */
+    color: #ffffff;
+}
+
+/* Back Button */
+#back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+#back-button button {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#back-button button:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+/* Hero */
+header {
+    padding: 100px 20px 80px;
+    text-align: center;
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 21px;
+}
+
+header p {
+    max-width: 850px;
+    margin: auto;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* Sections */
+section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 50px;
+}
+
+/* Language Cards Grid */
+.language-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px;
+}
+
+.language-card {
+    background: rgba(255,255,255,0.12);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.language-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 35px 65px rgba(0,0,0,0.55);
+}
+
+/* Accent Colors - Mobile Dev Specific */
+.language-card.swift { border-top: 6px solid #f05138; } /* Swift: Official orange-red */
+.language-card.kotlin { border-top: 6px solid #7f52ff; } /* Kotlin: Official purple */
+.language-card.ruby { border-top: 6px solid #cc342d; } /* Ruby: Official red */
+
+/* Image Placeholder */
+.language-image {
+    height: 160px;
+    background: linear-gradient(135deg, #134e5e, #071a24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+.language-image img {
+    max-height: 90px;
+    max-width: 90%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+}
+
+/* Card Content */
+.language-content {
+    padding: 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.language-content h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.language-card.swift h3 { color: #f05138; }
+.language-card.kotlin h3 { color: #7f52ff; }
+.language-card.ruby h3 { color: #cc342d; }
+
+.language-content p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Button */
+.language-content button {
+    align-self: flex-start;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.language-card.swift button {
+    background: linear-gradient(135deg, #f05138, #d43b25);
+}
+
+.language-card.kotlin button {
+    background: linear-gradient(135deg, #7f52ff, #6a3de8);
+}
+
+.language-card.ruby button {
+    background: linear-gradient(135deg, #cc342d, #b02925);
+}
+
+.language-content button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Details */
+.details {
+    margin-top: 25px;
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.details ul {
+    padding-left: 20px;
+}
+
+.details li {
+    margin-bottom: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div id="back-button">
+    <button onclick="window.location.href='index.html';">← Back</button>
+</div>
+
+<header>
+    <h1>Mobile Development Languages</h1>
+    <p>
+        Explore key programming languages used for building native and cross-platform mobile applications on iOS and Android platforms.
+    </p>
+</header>
+
+<section>
+    <h2>Explore the Languages</h2>
+
+    <div class="language-grid">
+
+        <!-- Swift -->
+        <div class="language-card swift">
+            <div class="language-image">
+                <img src="" alt="Swift Logo">
+            </div>
+            <div class="language-content">
+                <h3>Swift</h3>
+                <p>
+                    A powerful and intuitive language developed by Apple for iOS, macOS, watchOS, and tvOS app development.
+                </p>
+                <button onclick="window.location.href='Swift.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Native iOS and Apple ecosystem apps</li>
+                        <li><strong>Paradigm:</strong> Multi-paradigm (protocol-oriented, object-oriented)</li>
+                        <li><strong>Strength:</strong> Performance, safety, and modern syntax</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kotlin -->
+        <div class="language-card kotlin">
+            <div class="language-image">
+                <img src="" alt="Kotlin Logo">
+            </div>
+            <div class="language-content">
+                <h3>Kotlin</h3>
+                <p>
+                    A modern, concise language preferred by Google for Android development, fully interoperable with Java.
+                </p>
+                <button onclick="window.location.href='Kotlin.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Native Android apps</li>
+                        <li><strong>Paradigm:</strong> Multi-paradigm (object-oriented, functional)</li>
+                        <li><strong>Strength:</strong> Null safety, conciseness, and coroutines</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ruby (via Ruby on Rails / RubyMotion) -->
+        <div class="language-card ruby">
+            <div class="language-image">
+                <img src="" alt="Ruby Logo">
+            </div>
+            <div class="language-content">
+                <h3>Ruby</h3>
+                <p>
+                    A dynamic, reflective language known for its elegance; used in mobile dev via frameworks like RubyMotion or Teacup for iOS.
+                </p>
+                <button onclick="window.location.href='Ruby.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Cross-platform mobile (via RubyMotion) and backend</li>
+                        <li><strong>Paradigm:</strong> Multi-paradigm (object-oriented, functional)</li>
+                        <li><strong>Strength:</strong> Developer happiness and rapid prototyping</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+© 2025 • Mobile Development Languages Project
+</footer>
+
+</body>
+</html>

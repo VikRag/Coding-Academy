@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science & AI Languages</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: radial-gradient(circle at top, #0a1f3d, #000000); /* New: Deep navy to black gradient for a sophisticated data/AI aesthetic */
+    color: #ffffff;
+}
+
+/* Back Button */
+#back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+#back-button button {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#back-button button:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+/* Hero */
+header {
+    padding: 100px 20px 80px;
+    text-align: center;
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 21px;
+}
+
+header p {
+    max-width: 850px;
+    margin: auto;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* Sections */
+section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 50px;
+}
+
+/* Language Cards Grid */
+.language-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px;
+}
+
+.language-card {
+    background: rgba(255,255,255,0.12);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.language-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 35px 65px rgba(0,0,0,0.55);
+}
+
+/* Accent Colors - Data Science & AI Specific */
+.language-card.python { border-top: 6px solid #3776ab; } /* Python: Official blue-yellow blend, primary blue */
+.language-card.r { border-top: 6px solid #276dc2; } /* R: Official blue */
+.language-card.julia { border-top: 6px solid #a76cae; } /* Julia: Primary purple from logo */
+
+/* Image Placeholder */
+.language-image {
+    height: 160px;
+    background: linear-gradient(135deg, #0a1f3d, #000000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+.language-image img {
+    max-height: 90px;
+    max-width: 90%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+}
+
+/* Card Content */
+.language-content {
+    padding: 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.language-content h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.language-card.python h3 { color: #3776ab; }
+.language-card.r h3 { color: #276dc2; }
+.language-card.julia h3 { color: #a76cae; }
+
+.language-content p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Button */
+.language-content button {
+    align-self: flex-start;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.language-card.python button {
+    background: linear-gradient(135deg, #3776ab, #2d5d8a);
+}
+
+.language-card.r button {
+    background: linear-gradient(135deg, #276dc2, #1e54a3);
+}
+
+.language-card.julia button {
+    background: linear-gradient(135deg, #a76cae, #8d558f);
+}
+
+.language-content button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Details */
+.details {
+    margin-top: 25px;
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.details ul {
+    padding-left: 20px;
+}
+
+.details li {
+    margin-bottom: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div id="back-button">
+    <button onclick="window.location.href='index.html';">← Back</button>
+</div>
+
+<header>
+    <h1>Data Science & AI Languages</h1>
+    <p>
+        Discover the leading programming languages powering data analysis, statistical modeling, machine learning, and artificial intelligence workflows.
+    </p>
+</header>
+
+<section>
+    <h2>Explore the Languages</h2>
+
+    <div class="language-grid">
+
+        <!-- Python -->
+        <div class="language-card python">
+            <div class="language-image">
+                <img src="" alt="Python Logo">
+            </div>
+            <div class="language-content">
+                <h3>Python</h3>
+                <p>
+                    The dominant language in data science and AI, with powerful libraries like Pandas, NumPy, Scikit-learn, TensorFlow, and PyTorch.
+                </p>
+                <button onclick="window.location.href='Python.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Data analysis, machine learning, deep learning</li>
+                        <li><strong>Paradigm:</strong> Multi-paradigm</li>
+                        <li><strong>Strength:</strong> Vast ecosystem and community</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- R -->
+        <div class="language-card r">
+            <div class="language-image">
+                <img src="" alt="R Logo">
+            </div>
+            <div class="language-content">
+                <h3>R</h3>
+                <p>
+                    A language and environment specifically designed for statistical computing, graphics, and data analysis.
+                </p>
+                <button onclick="window.location.href='R.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Statistical modeling and visualization</li>
+                        <li><strong>Paradigm:</strong> Multi-paradigm (functional, object-oriented)</li>
+                        <li><strong>Strength:</strong> Advanced statistical packages and ggplot2</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Julia -->
+        <div class="language-card julia">
+            <div class="language-image">
+                <img src="" alt="Julia Logo">
+            </div>
+            <div class="language-content">
+                <h3>Julia</h3>
+                <p>
+                    A high-performance language for technical computing, combining speed with ease of use for numerical and scientific tasks.
+                </p>
+                <button onclick="window.location.href='Julia.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> High-performance numerical analysis and computational science</li>
+                        <li><strong>Paradigm:</strong> Multi-paradigm (multiple dispatch)</li>
+                        <li><strong>Strength:</strong> Speed comparable to C with dynamic syntax</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+© 2025 • Data Science & AI Languages Project
+</footer>
+
+</body>
+</html>

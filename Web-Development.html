@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Development Languages</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: radial-gradient(circle at top, #0f2027, #203a43, #0f2027);
+    color: #ffffff;
+}
+
+/* Back Button */
+#back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+#back-button button {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#back-button button:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+/* Hero */
+header {
+    padding: 100px 20px 80px;
+    text-align: center;
+}
+
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 21px;
+}
+
+header p {
+    max-width: 850px;
+    margin: auto;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* Sections */
+section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 50px;
+}
+
+/* Language Cards Grid */
+.language-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px;
+}
+
+.language-card {
+    background: rgba(255,255,255,0.12);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.language-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 35px 65px rgba(0,0,0,0.55);
+}
+
+/* Accent Colors - Web Dev Specific */
+.language-card.react { border-top: 6px solid #61dafb; } /* React: Signature cyan */
+.language-card.htmlcss { border-top: 6px solid #e34f26; } /* HTML/CSS: HTML orange + CSS blue blend, using HTML orange */
+.language-card.angular { border-top: 6px solid #dd0031; } /* Angular: Official red */
+
+/* Image Placeholder */
+.language-image {
+    height: 160px;
+    background: linear-gradient(135deg, #203a43, #2c5364);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+.language-image img {
+    max-height: 90px;
+    max-width: 90%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+}
+
+/* Card Content */
+.language-content {
+    padding: 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.language-content h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.language-card.react h3 { color: #61dafb; }
+.language-card.htmlcss h3 { color: #e34f26; }
+.language-card.angular h3 { color: #dd0031; }
+
+.language-content p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Button */
+.language-content button {
+    align-self: flex-start;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.language-card.react button {
+    background: linear-gradient(135deg, #61dafb, #00bcdc);
+}
+
+.language-card.htmlcss button {
+    background: linear-gradient(135deg, #e34f26, #c0392b);
+}
+
+.language-card.angular button {
+    background: linear-gradient(135deg, #dd0031, #b30029);
+}
+
+.language-content button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Details */
+.details {
+    margin-top: 25px;
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.details ul {
+    padding-left: 20px;
+}
+
+.details li {
+    margin-bottom: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div id="back-button">
+    <button onclick="window.location.href='index.html';">← Back</button>
+</div>
+
+<header>
+    <h1>Web Development Languages</h1>
+    <p>
+        Explore key technologies and frameworks that power modern web development, from building interactive user interfaces to structuring and styling web pages.
+    </p>
+</header>
+
+<section>
+    <h2>Explore the Languages</h2>
+
+    <div class="language-grid">
+
+        <!-- React -->
+        <div class="language-card react">
+            <div class="language-image">
+                <img src="" alt="React Logo">
+            </div>
+            <div class="language-content">
+                <h3>React</h3>
+                <p>
+                    A JavaScript library for building user interfaces, particularly single-page applications, using a component-based architecture.
+                </p>
+                <button onclick="window.location.href='React.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Front-end UI development</li>
+                        <li><strong>Paradigm:</strong> Declarative, component-based</li>
+                        <li><strong>Strength:</strong> Reusable components and virtual DOM</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- HTML & CSS -->
+        <div class="language-card htmlcss">
+            <div class="language-image">
+                <img src="" alt="HTML5 Logo">
+            </div>
+            <div class="language-content">
+                <h3>HTML & CSS</h3>
+                <p>
+                    The foundational markup language (HTML) and styling language (CSS) for structuring and designing content on the web.
+                </p>
+                <button onclick="window.location.href='HTMLCSS.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Web page structure and presentation</li>
+                        <li><strong>Paradigm:</strong> Markup and declarative styling</li>
+                        <li><strong>Strength:</strong> Universal browser support and flexibility</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Angular -->
+        <div class="language-card angular">
+            <div class="language-image">
+                <img src="" alt="Angular Logo">
+            </div>
+            <div class="language-content">
+                <h3>Angular</h3>
+                <p>
+                    A platform and framework for building single-page client applications using TypeScript, with powerful features like two-way data binding.
+                </p>
+                <button onclick="window.location.href='Angular.html';">Learn More</button>
+                <div class="details">
+                    <ul>
+                        <li><strong>Primary Use:</strong> Enterprise-scale web applications</li>
+                        <li><strong>Paradigm:</strong> Component-based, MVC</li>
+                        <li><strong>Strength:</strong> Full-featured framework with dependency injection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+© 2025 • Web Development Languages Project
+</footer>
+
+</body>
+</html>
