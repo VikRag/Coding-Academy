@@ -351,7 +351,7 @@
         <li><a href="#basics"><i class="fas fa-book-open"></i> Basics</a></li>
         <li><a href="#functions"><i class="fas fa-cogs"></i> Functions</a></li>
         <li><a href="#oop"><i class="fas fa-object-group"></i> Object-Oriented Programming</a></li>
-        <li><a href="#advanced"><i class="fas fa-rocket"></i> Advanced Topics</a></li>
+        
     </ul>
 </div>
 
@@ -548,39 +548,6 @@ vehicle.drive()  # Polymorphism</code></pre>
     </div>
 </section>
 
-<!-- ADVANCED -->
-<section id="advanced" class="section">
-    <h2>Advanced Topics</h2>
-    <p>Modules, exceptions, file I/O, comprehensions, decorators, generators, and more.</p>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">Modules & Exceptions</div>
-    <div class="panel">
-        <div class="code-box">
-            <pre><code class="language-python">import math
-print(math.sqrt(16))  # 4.0
-
-try:
-    x = 10 / 0
-except ZeroDivisionError:
-    print("Cannot divide by zero")</code></pre>
-        </div>
-    </div>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">File Handling & Comprehensions</div>
-    <div class="panel">
-        <div class="code-box">
-            <pre><code class="language-python"># Writing/Reading files
-with open("example.txt", "w") as f:
-    f.write("Hello Python")
-
-with open("example.txt", "r") as f:
-    print(f.read())
-
-# Dictionary comprehension
-squares = {x: x**2 for x in range(5)}</code></pre>
-        </div>
-    </div>
-</section>
 
 <!-- OVERALL PATH -->
 <section class="section">
