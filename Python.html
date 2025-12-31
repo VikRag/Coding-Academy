@@ -6,8 +6,8 @@
     <title>Python Programming Language</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> <!-- For code highlighting -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
 
     <!-- Prism.js for code highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
@@ -18,31 +18,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-    /* =======================
-       GLOBAL STYLES
-    ======================= */
+    /* GLOBAL STYLES */
     :root {
-        --primary-bg: #0f172a;
-        --secondary-bg: #020617;
-        --accent-color: #ffd43b; /* Python yellow */
-        --text-color: #ffffff;
-        --code-bg: #1e1e2f;
-        --sidebar-bg: rgba(255,255,255,0.12);
-        --hover-bg: rgba(255,255,255,0.35);
+        --bg: #0f172a;
+        --accent: #ffd43b; /* Python yellow */
+        --text: #ffffff;
+        --box-bg: rgba(255,255,255,0.12);
     }
-
-    * { box-sizing: border-box; }
 
     body {
         margin: 0;
         font-family: 'Roboto', sans-serif;
-        background: radial-gradient(circle at top, var(--primary-bg), var(--secondary-bg));
-        color: var(--text-color);
+        background: var(--bg);
+        color: var(--text);
     }
 
-    /* =======================
-       NAVIGATION BUTTONS
-    ======================= */
+    /* NAV BUTTONS */
     .nav-buttons {
         position: fixed;
         top: 20px;
@@ -50,308 +41,204 @@
         right: 20px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
         z-index: 99;
-        pointer-events: none;
     }
 
-    .back-btn,
-    .next-btn {
-        pointer-events: all;
-    }
-
-    .back-btn a,
-    .next-btn a {
-        background: var(--sidebar-bg);
-        padding: 12px 18px;
-        border-radius: 12px;
-        color: var(--text-color);
+    .nav-buttons a {
+        background: var(--box-bg);
+        padding: 10px 15px;
+        border-radius: 10px;
+        color: var(--text);
         text-decoration: none;
         font-weight: bold;
-        transition: background 0.3s ease;
-        display: inline-block;
-        font-family: 'Roboto', sans-serif;
     }
 
-    .back-btn a:hover,
-    .next-btn a:hover {
-        background: var(--hover-bg);
-    }
-
-    @media (max-width: 600px) {
-        .back-btn a,
-        .next-btn a {
-            padding: 14px 20px;
-            font-size: 1.1rem;
-        }
+    .nav-buttons a:hover {
+        background: rgba(255,255,255,0.3);
     }
 
     /* HEADER */
     header {
-        padding: 100px 20px 40px;
         text-align: center;
-        position: relative;
-        overflow: hidden;
-    }
-    header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.3);
-        z-index: -1;
-    }
-    header img {
-        max-width: 200px;
-        margin-bottom: 25px;
-        animation: fadeIn 1s ease;
-    }
-    header h1 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 3.5rem;
-        margin: 0;
-        animation: slideIn 1s ease;
-    }
-    header p {
-        max-width: 900px;
-        margin: 20px auto 0;
-        line-height: 1.7;
-        font-size: 1.1rem;
-        animation: fadeIn 1.5s ease;
+        padding: 80px 20px 40px;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+    header h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        margin: 0;
     }
-    @keyframes slideIn {
-        from { transform: translateY(-20px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
+
+    header p {
+        max-width: 800px;
+        margin: 20px auto;
+        font-size: 1.1rem;
     }
 
     /* SEARCH BAR */
     .search-bar {
-        max-width: 600px;
+        max-width: 500px;
         margin: 20px auto;
         position: relative;
     }
+
     .search-bar input {
         width: 100%;
         padding: 12px 40px 12px 15px;
         border-radius: 30px;
         border: none;
-        background: var(--sidebar-bg);
-        color: var(--text-color);
-        font-size: 1rem;
+        background: var(--box-bg);
+        color: var(--text);
     }
-    .search-bar input::placeholder {
-        color: rgba(255,255,255,0.7);
-    }
+
     .search-bar i {
         position: absolute;
         right: 15px;
         top: 50%;
         transform: translateY(-50%);
-        color: var(--accent-color);
+        color: var(--accent);
     }
 
     /* LAYOUT */
     .main-content {
         display: grid;
-        grid-template-columns: 250px 1fr;
-        gap: 40px;
-        max-width: 1400px;
+        grid-template-columns: 200px 1fr;
+        gap: 30px;
+        max-width: 1200px;
         margin: auto;
-        padding: 40px 20px;
+        padding: 20px;
     }
 
     /* SIDEBAR */
     .sidebar {
-        background: var(--sidebar-bg);
-        border-radius: 20px;
-        padding: 30px;
-        position: sticky;
-        top: 100px;
-        height: fit-content;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        background: var(--box-bg);
+        border-radius: 15px;
+        padding: 20px;
     }
+
     .sidebar h2 {
-        font-family: 'Montserrat', sans-serif;
-        color: var(--accent-color);
-        margin-bottom: 25px;
-        font-size: 1.5rem;
+        color: var(--accent);
+        font-size: 1.4rem;
+        margin-bottom: 20px;
     }
+
     .sidebar ul {
         list-style: none;
         padding: 0;
     }
-    .sidebar li {
-        margin-bottom: 15px;
-    }
+
     .sidebar a {
-        color: var(--text-color);
+        color: var(--text);
         text-decoration: none;
         display: flex;
         align-items: center;
-        transition: color 0.3s;
-    }
-    .sidebar a i {
-        margin-right: 10px;
-        color: var(--accent-color);
-    }
-    .sidebar a:hover {
-        color: var(--accent-color);
     }
 
-    /* CONTENT SECTIONS */
-    .content {
-        animation: fadeIn 1s ease;
+    .sidebar a i {
+        margin-right: 8px;
+        color: var(--accent);
     }
+
+    .sidebar a:hover {
+        color: var(--accent);
+    }
+
+    /* CONTENT */
     .section {
-        margin-bottom: 60px;
-        background: var(--sidebar-bg);
-        border-radius: 20px;
-        padding: 30px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        transition: transform 0.3s;
+        background: var(--box-bg);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 40px;
     }
-    .section:hover {
-        transform: translateY(-5px);
-    }
+
     .section h2 {
-        font-family: 'Montserrat', sans-serif;
-        color: var(--accent-color);
-        margin-bottom: 20px;
-        font-size: 2rem;
+        color: var(--accent);
+        font-size: 1.8rem;
+        margin-bottom: 15px;
     }
-    .section h3 {
-        color: #ffd43b;
-        margin: 25px 0 10px;
-        font-size: 1.4rem;
-    }
+
     .section p, .section ul {
-        line-height: 1.7;
-        font-size: 1.05rem;
+        line-height: 1.6;
     }
+
     .section ul {
         padding-left: 20px;
     }
-    .section ul li {
-        margin-bottom: 10px;
-        list-style-type: disc;
+
+    /* ACCORDION */
+    .accordion {
+        background: #1e1e2f;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 10px;
+        cursor: pointer;
     }
 
-    /* ACCORDION FOR SUBTOPICS */
-    .accordion {
-        cursor: pointer;
-        padding: 15px;
-        background: var(--code-bg);
-        border-radius: 10px;
-        margin-top: 10px;
-        transition: 0.3s;
-    }
-    .accordion:hover {
-        background: rgba(255,255,255,0.1);
-    }
     .panel {
         display: none;
         padding: 15px;
-        background: var(--code-bg);
-        border-radius: 0 0 10px 10px;
-        margin-top: -10px;
-    }
-    .panel p {
-        margin-bottom: 15px;
+        background: #1e1e2f;
+        border-radius: 0 0 8px 8px;
     }
 
     /* CODE BOX */
     .code-box {
-        background: var(--code-bg);
-        padding: 20px;
-        border-radius: 12px;
+        background: #1e1e2f;
+        padding: 15px;
+        border-radius: 10px;
         overflow-x: auto;
-        margin: 15px 0;
+        margin: 10px 0;
         font-family: 'Source Code Pro', monospace;
-    }
-    .code-box pre {
-        margin: 0;
     }
 
     /* FOOTER */
     footer {
         text-align: center;
-        padding: 50px 20px;
-        opacity: 0.8;
-        border-top: 1px solid rgba(255,255,255,0.1);
+        padding: 40px 20px;
+        opacity: 0.7;
     }
 
     /* RESPONSIVE */
-    @media(max-width: 900px) {
+    @media (max-width: 800px) {
         .main-content {
             grid-template-columns: 1fr;
-        }
-        .sidebar {
-            position: relative;
-            top: 0;
         }
         header h1 {
             font-size: 2.5rem;
         }
     }
-
-    @media (max-width: 600px) {
-        header {
-            padding: 120px 20px 40px;
-        }
-        header img {
-            max-width: 160px;
-        }
-    }
     </style>
 </head>
-
 <body>
 
-<!-- NAVIGATION BUTTONS -->
+<!-- NAVIGATION -->
 <div class="nav-buttons">
-    <div class="back-btn">
-        <a href="Data-Science-&-AI.html">← Back</a>
-    </div>
-    
-    <div class="next-btn">
-        <a href="python-tutorial.html">Python Tutorial →</a>
-    </div>
+    <div><a href="Data-Science-&-AI.html">← Back</a></div>
+    <div><a href="python-tutorial.html">Python Tutorial →</a></div>
 </div>
 
 <!-- HEADER -->
 <header>
-    <img src="" alt="Python Logo">
-    <h1>Python Programming Language</h1>
-    <p>
-        Python is a high-level, interpreted programming language known for its simplicity and readability. 
-        Explore the fundamentals and advanced topics with interactive elements, detailed explanations, and commented code examples below.
-    </p>
+    <h1>Python Programming</h1>
+    <p>Python is easy to learn and read. It's used for web, data, automation, and more. Learn basics with simple examples.</p>
 </header>
 
-<!-- SEARCH BAR -->
+<!-- SEARCH -->
 <div class="search-bar">
-    <input type="text" id="searchInput" onkeyup="searchSections()" placeholder="Search topics...">
+    <input type="text" id="searchInput" onkeyup="searchSections()" placeholder="Search...">
     <i class="fas fa-search"></i>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main-content">
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-    <h2>Python Topics</h2>
+    <h2>Topics</h2>
     <ul>
         <li><a href="#basics"><i class="fas fa-book-open"></i> Basics</a></li>
         <li><a href="#functions"><i class="fas fa-cogs"></i> Functions</a></li>
-        <li><a href="#oop"><i class="fas fa-object-group"></i> Object-Oriented Programming</a></li>
-        
+        <li><a href="#oop"><i class="fas fa-object-group"></i> OOP</a></li>
     </ul>
 </div>
 
@@ -361,206 +248,156 @@
 <!-- BASICS -->
 <section id="basics" class="section">
     <h2>Basics</h2>
-    <p>Core concepts of Python including variables, data types, operators, control flow, loops, and basic syntax. These form the foundation for any Python program.</p>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">Introduction & Syntax</div>
-    <div class="panel">
-        <p>Python was created by Guido van Rossum and first released in 1991. It's known for its clean, readable syntax and "batteries included" philosophy with a rich standard library.</p>
-        <p>Python uses indentation for blocks instead of braces. It's dynamically typed and supports multiple paradigms.</p>
-        <ul>
-            <li><strong>Introduction:</strong> Easy-to-read, versatile language used for web development, data science, automation, AI, and more.</li>
-            <li><strong>Syntax:</strong> No semicolons required; indentation defines code blocks. Comments use #.</li>
-            <li><strong>Output:</strong> Use print() function.</li>
-        </ul>
-        <div class="code-box">
-            <pre><code class="language-python"># Simple Hello World
-print("Hello, World!")  # Outputs: Hello, World!
+    <p>Start with variables, types, loops, and simple code.</p>
 
-# Formatted output
-name = "Python"
-version = 3.12
-print(f"Welcome to {name} {version}")  # Outputs: Welcome to Python 3.12</code></pre>
-        </div>
-        <p><strong>Path to Expertise:</strong> Start with the classic print statement. W3Schools Python Intro, Syntax, Comments, and Variables sections have "Try it Yourself" editors.</p>
-    </div>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">Variables & Data Types</div>
+    <div class="accordion" onclick="toggleAccordion(this)">Hello World & Syntax</div>
     <div class="panel">
-        <p>Variables are created by assignment. Common types: int, float, str, bool, list, tuple, dict, set.</p>
-        <ul>
-            <li><strong>Variables:</strong> No declaration needed; dynamically typed.</li>
-            <li><strong>Data Types:</strong> Numbers (int, float, complex), sequences (str, list, tuple), mappings (dict), sets.</li>
-        </ul>
+        <p>Python uses spaces for blocks. No {} or ; needed. Use # for comments.</p>
+        <div class="code-box">
+            <pre><code class="language-python"># Hello World
+print("Hello, World!")
+
+# With name
+name = "Python"
+print(f"Hi {name}")</code></pre>
+        </div>
+    </div>
+
+    <div class="accordion" onclick="toggleAccordion(this)">Variables & Types</div>
+    <div class="panel">
+        <p>No need to declare type. Common: int, float, str, bool, list.</p>
         <div class="code-box">
             <pre><code class="language-python">x = 5          # int
 y = 3.14       # float
-name = "Python" # str
-is_fun = True  # bool
+name = "Hi"    # str
+active = True  # bool
 
-# Lists (mutable) and Tuples (immutable)
-fruits = ["apple", "banana", "cherry"]  # list
-coords = (10, 20)                       # tuple
+fruits = ["apple", "banana"]  # list
 
-# Dictionary (key-value)
-person = {"name": "Alice", "age": 30}
-
-# Type checking and conversion
-print(type(x))      # <class 'int'>
-z = float(x)        # 5.0</code></pre>
+print(type(x))  # <class 'int'></code></pre>
         </div>
-        <p><strong>Path to Expertise:</strong> Practice type conversion and basic operations. W3Schools: Variables, Data Types, Numbers, Casting, Strings, Booleans, Operators.</p>
     </div>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">Control Flow & Loops</div>
+
+    <div class="accordion" onclick="toggleAccordion(this)">If & Loops</div>
     <div class="panel">
-        <p>Use if-elif-else for decisions, for/while for loops, and comprehensions for concise iteration.</p>
-        <ul>
-            <li><strong>Conditionals:</strong> if, elif, else.</li>
-            <li><strong>Loops:</strong> for (iterates over sequences), while (condition-based).</li>
-        </ul>
+        <p>Use if for decisions. for/while for repeats.</p>
         <div class="code-box">
-            <pre><code class="language-python"># If-elif-else
+            <pre><code class="language-python"># If
 age = 18
 if age >= 18:
     print("Adult")
-elif age >= 13:
-    print("Teen")
 else:
-    print("Child")
+    print("Kid")
 
 # For loop
 for fruit in fruits:
     print(fruit)
 
-# Range-based for loop
-for i in range(5):
-    print(i)  # 0 to 4
-
-# While loop
+# While
 count = 0
 while count < 3:
     print(count)
-    count += 1
-
-# List comprehension
-squares = [x**2 for x in range(10)]</code></pre>
+    count += 1</code></pre>
         </div>
-        <p><strong>Path to Expertise:</strong> Build simple programs like calculators. W3Schools: If...Else, While Loops, For Loops.</p>
     </div>
-    
+
     <div class="accordion" onclick="toggleAccordion(this)">Strings & Lists</div>
     <div class="panel">
-        <p>Strings are immutable sequences with many methods. Lists are mutable and versatile.</p>
+        <p>Strings can't change. Lists can.</p>
         <div class="code-box">
-            <pre><code class="language-python"># String operations
-greeting = "Hello Python"
-print(len(greeting))          # 12
-print(greeting.upper())       # HELLO PYTHON
-print(greeting[0:5])          # Hello (slicing)
+            <pre><code class="language-python">text = "Hello"
+print(text.upper())  # HELLO
+print(text[0])       # H
 
-# List operations
-numbers = [1, 2, 3]
-numbers.append(4)             # [1, 2, 3, 4]
-numbers.pop()                 # removes last
-print(sorted(numbers))        # [1, 2, 3]</code></pre>
+nums = [1, 2]
+nums.append(3)       # [1,2,3]
+print(nums)</code></pre>
         </div>
-        <p><strong>Path to Expertise:</strong> Practice string formatting and list methods. W3Schools: Strings, Lists, Tuples, Sets, Dictionaries.</p>
     </div>
 </section>
 
 <!-- FUNCTIONS -->
 <section id="functions" class="section">
     <h2>Functions</h2>
-    <p>Functions are defined with def, support parameters, defaults, *args, **kwargs, and lambdas.</p>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">Functions & Parameters</div>
+    <p>Reuse code with def.</p>
+
+    <div class="accordion" onclick="toggleAccordion(this)">Simple Functions</div>
     <div class="panel">
         <div class="code-box">
             <pre><code class="language-python">def greet(name="World"):
-    print(f"Hello, {name}!")
+    print(f"Hello {name}")
 
-greet()           # Hello, World!
-greet("Alice")    # Hello, Alice!
+greet()       # Hello World
+greet("Ali")  # Hello Ali
 
-# Variable arguments
-def sum_all(*args):
-    return sum(args)
+def add(a, b):
+    return a + b
 
-print(sum_all(1, 2, 3, 4))  # 10
-
-# Keyword arguments
-def info(**kwargs):
-    for key, value in kwargs.items():
-        print(f"{key}: {value}")
-
-info(name="Bob", age=25)</code></pre>
+print(add(2, 3))  # 5</code></pre>
         </div>
-        <p><strong>Path to Expertise:</strong> W3Schools: Functions, Lambda, Scope.</p>
     </div>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">Advanced Functions</div>
+
+    <div class="accordion" onclick="toggleAccordion(this)">Lambda & Recursion</div>
     <div class="panel">
         <div class="code-box">
-            <pre><code class="language-python"># Recursion
-def factorial(n):
+            <pre><code class="language-python"># Lambda (short function)
+sq = lambda x: x * x
+print(sq(4))  # 16
+
+# Recursion
+def fact(n):
     if n <= 1:
         return 1
-    return n * factorial(n-1)
+    return n * fact(n-1)
 
-# Lambda
-square = lambda x: x**2
-print(square(5))  # 25</code></pre>
+print(fact(5))  # 120</code></pre>
         </div>
     </div>
 </section>
 
 <!-- OOP -->
 <section id="oop" class="section">
-    <h2>Object-Oriented Programming</h2>
-    <p>Python supports classes, inheritance, polymorphism, encapsulation, and more.</p>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">Classes & Objects</div>
+    <h2>OOP (Classes)</h2>
+    <p>Group data and actions.</p>
+
+    <div class="accordion" onclick="toggleAccordion(this)">Class & Object</div>
     <div class="panel">
         <div class="code-box">
-            <pre><code class="language-python">class Car:
-    def __init__(self, model, year):
-        self.model = model
-        self.year = year
+            <pre><code class="language-python">class Dog:
+    def __init__(self, name):
+        self.name = name
     
-    def drive(self):
-        print(f"Driving {self.model}")
+    def bark(self):
+        print("Woof!")
 
-my_car = Car("Tesla", 2023)
-my_car.drive()</code></pre>
+my_dog = Dog("Buddy")
+my_dog.bark()</code></pre>
         </div>
     </div>
-    
-    <div class="accordion" onclick="toggleAccordion(this)">Inheritance & Polymorphism</div>
+
+    <div class="accordion" onclick="toggleAccordion(this)">Inheritance</div>
     <div class="panel">
         <div class="code-box">
-            <pre><code class="language-python">class ElectricCar(Car):
-    def drive(self):
-        print(f"Driving electrically {self.model}")
+            <pre><code class="language-python">class Puppy(Dog):
+    def bark(self):
+        print("Yip!")
 
-vehicle = ElectricCar("Tesla", 2023)
-vehicle.drive()  # Polymorphism</code></pre>
+small = Puppy("Tiny")
+small.bark()  # Yip!</code></pre>
         </div>
     </div>
 </section>
 
-
-<!-- OVERALL PATH -->
+<!-- PATH -->
 <section class="section">
-    <h2>How to Become a Python Expert Using This Site & W3Schools</h2>
-    <p>Follow the sections in order, practice code examples, then head to W3Schools for interactive exercises and quizzes.</p>
+    <h2>Learn More</h2>
+    <p>Practice here, then try W3Schools for exercises.</p>
     <ul>
-        <li><strong>Step 1: Basics</strong> – Master syntax and core data structures.</li>
-        <li><strong>Step 2: Functions & OOP</strong> – Build reusable and organized code.</li>
-        <li><strong>Step 3: Advanced</strong> – Handle real-world tasks with files, exceptions, and modules.</li>
-        <li><strong>Practice:</strong> Use W3Schools Python Exercises, Quiz, and "Try it Yourself".</li>
-        <li><strong>Projects:</strong> Build scripts, web scrapers, data analysis tools, or simple games.</li>
+        <li>1. Basics</li>
+        <li>2. Functions</li>
+        <li>3. Classes</li>
+        <li>Do quizzes at <a href="https://www.w3schools.com/python/" target="_blank">W3Schools</a></li>
     </ul>
-    <p>Visit <a href="https://www.w3schools.com/python/" target="_blank">W3Schools Python Tutorial</a> for the complete interactive path.</p>
 </section>
 
 </div>
@@ -568,32 +405,27 @@ vehicle.drive()  # Polymorphism</code></pre>
 
 <!-- FOOTER -->
 <footer>
-    © 2025 • Python Programming Language • Powered by xAI
+    © 2025 • Python • Powered by xAI
 </footer>
 
 <script>
-    // Accordion Toggle
-    function toggleAccordion(element) {
-        const panel = element.nextElementSibling;
+    function toggleAccordion(el) {
+        const panel = el.nextElementSibling;
         panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
     }
 
-    // Search Functionality
     function searchSections() {
         const input = document.getElementById('searchInput').value.toLowerCase();
         const sections = document.querySelectorAll('.section');
-        sections.forEach(section => {
-            const text = section.textContent.toLowerCase();
-            section.style.display = text.includes(input) ? 'block' : 'none';
+        sections.forEach(sec => {
+            sec.style.display = sec.textContent.toLowerCase().includes(input) ? 'block' : 'none';
         });
     }
 
-    // Smooth Scroll for Sidebar Links
-    document.querySelectorAll('.sidebar a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+    document.querySelectorAll('.sidebar a').forEach(a => {
+        a.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            target.scrollIntoView({ behavior: 'smooth' });
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
         });
     });
 </script>
