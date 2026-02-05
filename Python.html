@@ -237,8 +237,6 @@
     <h2>Topics</h2>
     <ul>
         <li><a href="#basics"><i class="fas fa-book-open"></i> Basics</a></li>
-        <li><a href="#functions"><i class="fas fa-cogs"></i> Functions</a></li>
-        <li><a href="#oop"><i class="fas fa-object-group"></i> OOP</a></li>
     </ul>
 </div>
 
@@ -316,96 +314,13 @@ print(nums)</code></pre>
     </div>
 </section>
 
-<!-- FUNCTIONS -->
-<section id="functions" class="section">
-    <h2>Functions</h2>
-    <p>Reuse code with def.</p>
-
-    <div class="accordion" onclick="toggleAccordion(this)">Simple Functions</div>
-    <div class="panel">
-        <div class="code-box">
-            <pre><code class="language-python">def greet(name="World"):
-    print(f"Hello {name}")
-
-greet()       # Hello World
-greet("Ali")  # Hello Ali
-
-def add(a, b):
-    return a + b
-
-print(add(2, 3))  # 5</code></pre>
-        </div>
-    </div>
-
-    <div class="accordion" onclick="toggleAccordion(this)">Lambda & Recursion</div>
-    <div class="panel">
-        <div class="code-box">
-            <pre><code class="language-python"># Lambda (short function)
-sq = lambda x: x * x
-print(sq(4))  # 16
-
-# Recursion
-def fact(n):
-    if n <= 1:
-        return 1
-    return n * fact(n-1)
-
-print(fact(5))  # 120</code></pre>
-        </div>
-    </div>
-</section>
-
-<!-- OOP -->
-<section id="oop" class="section">
-    <h2>OOP (Classes)</h2>
-    <p>Group data and actions.</p>
-
-    <div class="accordion" onclick="toggleAccordion(this)">Class & Object</div>
-    <div class="panel">
-        <div class="code-box">
-            <pre><code class="language-python">class Dog:
-    def __init__(self, name):
-        self.name = name
-    
-    def bark(self):
-        print("Woof!")
-
-my_dog = Dog("Buddy")
-my_dog.bark()</code></pre>
-        </div>
-    </div>
-
-    <div class="accordion" onclick="toggleAccordion(this)">Inheritance</div>
-    <div class="panel">
-        <div class="code-box">
-            <pre><code class="language-python">class Puppy(Dog):
-    def bark(self):
-        print("Yip!")
-
-small = Puppy("Tiny")
-small.bark()  # Yip!</code></pre>
-        </div>
-    </div>
-</section>
-
-<!-- PATH -->
-<section class="section">
-    <h2>Learn More</h2>
-    <p>Practice here, then try W3Schools for exercises.</p>
-    <ul>
-        <li>1. Basics</li>
-        <li>2. Functions</li>
-        <li>3. Classes</li>
-        <li>Do quizzes at <a href="https://www.w3schools.com/python/" target="_blank">W3Schools</a></li>
-    </ul>
-</section>
 
 </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-    © 2025 • Python • Powered by xAI
+    © 2026 • Python Programming Overview 
 </footer>
 
 <script>

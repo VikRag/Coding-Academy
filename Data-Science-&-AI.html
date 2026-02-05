@@ -16,8 +16,9 @@
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background: radial-gradient(circle at top, #0a1f3d, #000000); /* New: Deep navy to black gradient for a sophisticated data/AI aesthetic */
+    background: radial-gradient(circle at top, #0a1f3d, #000000);
     color: #ffffff;
+    min-height: 100vh;
 }
 
 /* Back Button */
@@ -36,6 +37,7 @@ body {
     border-radius: 12px;
     cursor: pointer;
     transition: 0.3s;
+    backdrop-filter: blur(10px);
 }
 
 #back-button button:hover {
@@ -44,85 +46,115 @@ body {
 
 /* Hero */
 header {
-    padding: 100px 20px 80px;
+    padding: 120px 20px 100px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') no-repeat center center/cover;
+    opacity: 0.15;
+    z-index: -1;
 }
 
 header h1 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 3.2rem;
-    margin-bottom: 21px;
+    font-size: 3.8rem;
+    margin-bottom: 24px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.6);
 }
 
 header p {
-    max-width: 850px;
+    max-width: 900px;
     margin: auto;
-    font-size: 1.15rem;
-    line-height: 1.7;
-    opacity: 0.9;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    opacity: 0.92;
 }
 
 /* Sections */
 section {
-    padding: 80px 20px;
-    max-width: 1200px;
+    padding: 100px 20px;
+    max-width: 1300px;
     margin: auto;
 }
 
 h2 {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
-    font-size: 2.4rem;
-    margin-bottom: 50px;
+    font-size: 2.8rem;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #3776ab, #a76cae);
+    margin: 20px auto 0;
+    border-radius: 2px;
 }
 
 /* Language Cards Grid */
 .language-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 35px;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 40px;
 }
 
 .language-card {
-    background: rgba(255,255,255,0.12);
-    border-radius: 22px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 28px;
     overflow: hidden;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    transition: all 0.4s ease;
     display: flex;
     flex-direction: column;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .language-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 35px 65px rgba(0,0,0,0.55);
+    transform: translateY(-18px) scale(1.02);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.65);
 }
 
-/* Accent Colors - Data Science & AI Specific */
-.language-card.python { border-top: 6px solid #3776ab; } /* Python: Official blue-yellow blend, primary blue */
-.language-card.r { border-top: 6px solid #276dc2; } /* R: Official blue */
-.language-card.julia { border-top: 6px solid #a76cae; } /* Julia: Primary purple from logo */
+/* Accent Borders */
+.language-card.python { border-top: 8px solid #3776ab; }
+.language-card.r { border-top: 8px solid #276dc2; }
+.language-card.julia { border-top: 8px solid #a76cae; }
 
-/* Image Placeholder */
+/* Image */
 .language-image {
-    height: 160px;
-    background: linear-gradient(135deg, #0a1f3d, #000000);
+    height: 180px;
+    background: linear-gradient(135deg, rgba(10,31,61,0.9), rgba(0,0,0,0.9));
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 25px;
+    padding: 30px;
 }
 
 .language-image img {
-    max-height: 90px;
-    max-width: 90%;
+    max-height: 110px;
+    max-width: 95%;
     object-fit: contain;
-    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));
+    transition: transform 0.4s ease;
+}
+
+.language-card:hover .language-image img {
+    transform: scale(1.1);
 }
 
 /* Card Content */
 .language-content {
-    padding: 30px;
+    padding: 35px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -130,8 +162,8 @@ h2 {
 
 .language-content h3 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.6rem;
-    margin-bottom: 12px;
+    font-size: 1.9rem;
+    margin-bottom: 16px;
 }
 
 .language-card.python h3 { color: #3776ab; }
@@ -139,62 +171,70 @@ h2 {
 .language-card.julia h3 { color: #a76cae; }
 
 .language-content p {
-    line-height: 1.6;
-    margin-bottom: 20px;
+    line-height: 1.7;
+    margin-bottom: 24px;
     flex-grow: 1;
+    font-size: 1.05rem;
 }
 
 /* Button */
 .language-content button {
     align-self: flex-start;
     border: none;
-    padding: 12px 18px;
-    border-radius: 12px;
+    padding: 14px 24px;
+    border-radius: 14px;
     font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
     color: #fff;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-.language-card.python button {
-    background: linear-gradient(135deg, #3776ab, #2d5d8a);
-}
-
-.language-card.r button {
-    background: linear-gradient(135deg, #276dc2, #1e54a3);
-}
-
-.language-card.julia button {
-    background: linear-gradient(135deg, #a76cae, #8d558f);
-}
+.language-card.python button { background: linear-gradient(135deg, #3776ab, #ffd43b); }
+.language-card.r button { background: linear-gradient(135deg, #276dc2, #1987e6); }
+.language-card.julia button { background: linear-gradient(135deg, #a76cae, #cb79d5); }
 
 .language-content button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.45);
 }
 
 /* Details */
 .details {
-    margin-top: 25px;
-    background: rgba(255,255,255,0.08);
-    padding: 20px;
-    border-radius: 15px;
+    margin-top: 30px;
+    background: rgba(255,255,255,0.06);
+    padding: 24px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
 .details ul {
-    padding-left: 20px;
+    padding-left: 22px;
+    list-style: none;
 }
 
 .details li {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.details li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: inherit;
+    opacity: 0.8;
 }
 
 /* Footer */
 footer {
     text-align: center;
-    padding: 50px 20px;
-    font-size: 0.9rem;
+    padding: 60px 20px;
+    font-size: 0.95rem;
     opacity: 0.7;
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
 </style>
 </head>
@@ -220,7 +260,7 @@ footer {
         <!-- Python -->
         <div class="language-card python">
             <div class="language-image">
-                <img src="" alt="Python Logo">
+                <img src="https://logos-world.net/wp-content/uploads/2021/10/Python-Symbol.png" alt="Python Logo">
             </div>
             <div class="language-content">
                 <h3>Python</h3>
@@ -241,7 +281,7 @@ footer {
         <!-- R -->
         <div class="language-card r">
             <div class="language-image">
-                <img src="" alt="R Logo">
+                <img src="https://www.clipartmax.com/png/middle/13-137348_logo-r-programming.png" alt="R Logo">
             </div>
             <div class="language-content">
                 <h3>R</h3>
@@ -262,7 +302,7 @@ footer {
         <!-- Julia -->
         <div class="language-card julia">
             <div class="language-image">
-                <img src="" alt="Julia Logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" alt="Julia Logo">
             </div>
             <div class="language-content">
                 <h3>Julia</h3>
