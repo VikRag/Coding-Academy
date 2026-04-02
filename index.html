@@ -1,1405 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coding Language Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #06060a;
-    --surface: #0e0e16;
-    --surface2: #16161f;
-    --border: rgba(255,255,255,0.07);
-    --text: #f0f0f8;
-    --muted: rgba(240,240,248,0.45);
-    --accent: #7c6aff;
-
-    /* Category colors */
-    --general: #4ade80;
-    --domain: #f97316;
-    --web: #38bdf8;
-    --mobile: #f472b6;
-    --data: #a78bfa;
-    --game: #fb923c;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 60px 24px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .hero-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.18;
-    animation: orb-drift 12s ease-in-out infinite alternate;
-  }
-
-  .orb1 { width: 600px; height: 600px; background: #7c6aff; top: -200px; left: -100px; animation-delay: 0s; }
-  .orb2 { width: 500px; height: 500px; background: #f472b6; bottom: -150px; right: -100px; animation-delay: -4s; }
-  .orb3 { width: 400px; height: 400px; background: #38bdf8; top: 30%; left: 40%; animation-delay: -8s; }
-
-  @keyframes orb-drift {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(40px, -30px) scale(1.12); }
-  }
-
-  .hero-content { position: relative; z-index: 1; max-width: 860px; }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(124,106,255,0.15);
-    border: 1px solid rgba(124,106,255,0.35);
-    border-radius: 100px;
-    padding: 6px 18px;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #a78bfa;
-    margin-bottom: 32px;
-    animation: fade-up 0.8s ease both;
-  }
-
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(3rem, 7vw, 6rem);
-    font-weight: 800;
-    line-height: 1.0;
-    letter-spacing: -0.03em;
-    animation: fade-up 0.8s 0.1s ease both;
-  }
-
-  .hero h1 span {
-    background: linear-gradient(135deg, #7c6aff, #f472b6, #38bdf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-sub {
-    margin-top: 24px;
-    font-size: 1.1rem;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-    animation: fade-up 0.8s 0.2s ease both;
-  }
-
-  .hero-cta {
-    margin-top: 48px;
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fade-up 0.8s 0.3s ease both;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, #7c6aff, #a855f7);
-    color: white;
-    border: none;
-    padding: 14px 32px;
-    border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 40px rgba(124,106,255,0.4);
-  }
-
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(124,106,255,0.55); }
-
-  .btn-secondary {
-    background: var(--surface2);
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 14px 32px;
-    border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-
-  .btn-secondary:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    animation: fade-up 1s 0.6s ease both;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
-    animation: scroll-pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes scroll-pulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.1); }
-  }
-
-  /* ── STATS ── */
-  .stats-bar {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 32px 24px;
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    flex-wrap: wrap;
-  }
-
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #7c6aff, #f472b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
-
-  /* ── MAIN CONTENT ── */
-  .main { padding: 80px 24px 120px; max-width: 1400px; margin: auto; }
-
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 56px;
-  }
-
-  .section-label h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 800;
-  }
-
-  .section-label-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* ── CATEGORY CARDS ── */
-  .categories { display: flex; flex-direction: column; gap: 48px; }
-
-  .category {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    overflow: hidden;
-    transition: border-color 0.3s;
-  }
-
-  .category:hover { border-color: rgba(255,255,255,0.14); }
-
-  .category-header {
-    padding: 28px 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.2s;
-  }
-
-  .category-header:hover { background: rgba(255,255,255,0.02); }
-
-  .cat-title-group { display: flex; align-items: center; gap: 20px; }
-
-  .cat-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    flex-shrink: 0;
-  }
-
-  .cat-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; }
-  .cat-count { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
-
-  .cat-header-right { display: flex; align-items: center; gap: 16px; }
-
-  .cat-learn-btn {
-    padding: 10px 22px;
-    border-radius: 100px;
-    border: 1px solid;
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-
-  .cat-learn-btn:hover { transform: translateY(-2px); }
-
-  .cat-chevron {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s, border-color 0.2s;
-    flex-shrink: 0;
-    color: var(--muted);
-    font-size: 0.8rem;
-  }
-
-  .category.open .cat-chevron { transform: rotate(180deg); }
-
-  /* ── LANGUAGE GRID (inside category) ── */
-  .lang-grid-wrapper {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .category.open .lang-grid-wrapper { max-height: 900px; }
-
-  .lang-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
-    padding: 32px 36px 36px;
-  }
-
-  .lang-card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 28px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .lang-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--card-color, transparent), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .lang-card:hover::before { opacity: 0.06; }
-
-  .lang-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(255,255,255,0.15);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  }
-
-  .lang-card-top { display: flex; align-items: center; gap: 14px; }
-
-  .lang-logo {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    flex-shrink: 0;
-    overflow: hidden;
-  }
-
-  .lang-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 4px;
-  }
-
-  .lang-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.05rem;
-  }
-
-  .lang-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.6;
-    flex: 1;
-  }
-
-  .lang-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: auto;
-  }
-
-  .lang-tag {
-    font-size: 0.7rem;
-    padding: 3px 10px;
-    border-radius: 100px;
-    border: 1px solid;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-  }
-
-  .lang-arrow {
-    align-self: flex-end;
-    font-size: 0.8rem;
-    color: var(--muted);
-    transition: transform 0.2s, color 0.2s;
-  }
-
-  .lang-card:hover .lang-arrow { transform: translate(3px, -3px); color: var(--text); }
-
-  /* ── MODAL ── */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(6,6,10,0.85);
-    backdrop-filter: blur(16px);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-  }
-
-  .modal-overlay.visible { opacity: 1; pointer-events: all; }
-
-  .modal {
-    background: var(--surface);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 28px;
-    max-width: 640px;
-    width: 100%;
-    padding: 48px;
-    position: relative;
-    transform: scale(0.95) translateY(20px);
-    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  .modal-overlay.visible .modal { transform: scale(1) translateY(0); }
-
-  .modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--text);
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-  }
-
-  .modal-close:hover { background: rgba(255,255,255,0.1); transform: rotate(90deg); }
-
-  .modal-icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    margin-bottom: 24px;
-    overflow: hidden;
-  }
-
-  .modal-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 8px;
-  }
-
-  .modal-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-  }
-
-  .modal-category {
-    font-size: 0.8rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 24px;
-  }
-
-  .modal-desc {
-    color: rgba(240,240,248,0.8);
-    line-height: 1.75;
-    margin-bottom: 32px;
-  }
-
-  .modal-specs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-
-  .modal-spec {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
-  }
-
-  .modal-spec-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-  .modal-spec-value { font-weight: 500; font-size: 0.9rem; }
-
-  .modal-actions { display: flex; gap: 12px; }
-
-  .modal-btn-primary {
-    flex: 1;
-    padding: 14px;
-    border-radius: 14px;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
-    cursor: pointer;
-    color: white;
-    transition: all 0.2s;
-  }
-
-  .modal-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-
-  .modal-btn-secondary {
-    flex: 1;
-    padding: 14px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
-    cursor: pointer;
-    color: var(--text);
-    transition: all 0.2s;
-  }
-
-  .modal-btn-secondary:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
-
-  /* ── SEARCH ── */
-  .search-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 14px 20px;
-    max-width: 520px;
-    margin: 0 auto 72px;
-    transition: border-color 0.2s;
-  }
-
-  .search-bar:focus-within { border-color: rgba(124,106,255,0.5); }
-
-  .search-bar input {
-    flex: 1;
-    background: none;
-    border: none;
-    outline: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    color: var(--text);
-  }
-
-  .search-bar input::placeholder { color: var(--muted); }
-
-  .search-icon { color: var(--muted); font-size: 1rem; }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    text-align: center;
-    padding: 48px 24px;
-    color: var(--muted);
-    font-size: 0.85rem;
-  }
-
-  footer span {
-    background: linear-gradient(135deg, #7c6aff, #f472b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 600;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .category {
-    opacity: 0;
-    animation: fade-up 0.6s ease both;
-  }
-
-  .category:nth-child(1) { animation-delay: 0.1s; }
-  .category:nth-child(2) { animation-delay: 0.2s; }
-  .category:nth-child(3) { animation-delay: 0.3s; }
-  .category:nth-child(4) { animation-delay: 0.4s; }
-  .category:nth-child(5) { animation-delay: 0.5s; }
-  .category:nth-child(6) { animation-delay: 0.6s; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    .lang-grid { grid-template-columns: 1fr; padding: 20px; }
-    .category-header { padding: 20px; flex-wrap: wrap; gap: 12px; }
-    .cat-learn-btn { display: none; }
-    .modal { padding: 28px; }
-    .modal-specs { grid-template-columns: 1fr; }
-    .stats-bar { gap: 40px; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding Language Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inconsolata:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* ============================================
+       DESIGN TOKENS
+    ============================================ */
+    :root {
+      /* base */
+      --bg:             #e8eef7;
+      --bg-warm:        #dde5f2;
+      --surface:        #f2f6fc;
+      --border:         #c5d0e4;
+      --border-strong:  #a3b3ce;
+
+      /* text scale */
+      --ink:            #0f1a2e;
+      --ink-2:          #2e3f5c;
+      --ink-3:          #6278a0;
+      --ink-4:          #9aaac4;
+
+      /* category accents */
+      --general:        #1d4ed8;
+      --general-bg:     #dbeafe;
+      --dsl:            #be123c;
+      --dsl-bg:         #ffe4e6;
+      --web:            #047857;
+      --web-bg:         #d1fae5;
+      --mobile:         #6d28d9;
+      --mobile-bg:      #ede9fe;
+      --data:           #b45309;
+      --data-bg:        #fef3c7;
+      --game:           #0e7490;
+      --game-bg:        #cffafe;
+
+      /* typography */
+      --font-head:      'Syne', sans-serif;
+      --font-mono:      'Inconsolata', monospace;
+      --font-body:      'Lato', sans-serif;
+    }
+
+
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      margin:     0;
+      padding:    0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:  var(--bg);
+      color:       var(--ink);
+      font-family: var(--font-body);
+      min-height:  100vh;
+    }
+
+
+    /* ============================================
+       NAVIGATION
+    ============================================ */
+    nav {
+      position:        sticky;
+      top:             0;
+      z-index:         100;
+      height:          54px;
+      padding:         0 2rem;
+      background:      rgba(232, 238, 247, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom:   1px solid var(--border);
+      display:         flex;
+      align-items:     center;
+      gap:             0.2rem;
+    }
+
+    .nav-logo {
+      font-family:     var(--font-head);
+      font-size:       1rem;
+      font-weight:     800;
+      letter-spacing:  0.04em;
+      color:           var(--ink);
+      text-decoration: none;
+      margin-right:    auto;
+    }
+
+    .nav-link {
+      font-family:     var(--font-body);
+      font-size:       0.76rem;
+      font-weight:     700;
+      letter-spacing:  0.07em;
+      text-transform:  uppercase;
+      color:           var(--ink-3);
+      text-decoration: none;
+      padding:         0.35rem 0.65rem;
+      border-radius:   4px;
+      transition:      color 0.15s, background 0.15s;
+    }
+    .nav-link:hover { color: var(--ink); background: var(--bg-warm); }
+
+    .nav-cta {
+      margin-left:     0.6rem;
+      padding:         0.38rem 0.95rem;
+      background:      var(--ink);
+      border-radius:   5px;
+      font-family:     var(--font-mono);
+      font-size:       0.71rem;
+      font-weight:     600;
+      letter-spacing:  0.06em;
+      color:           var(--bg) !important;
+      text-decoration: none;
+      transition:      opacity 0.15s, transform 0.12s;
+    }
+    .nav-cta:hover { opacity: 0.8; transform: translateY(-1px); }
+
+
+    /* ============================================
+       HERO / HEADER
+    ============================================ */
+    header {
+      max-width: 860px;
+      margin:    0 auto;
+      padding:   4.5rem 2rem 3rem;
+    }
+
+    .hero-eyebrow {
+      font-family:    var(--font-mono);
+      font-size:      0.7rem;
+      font-weight:    600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color:          var(--ink-3);
+      margin-bottom:  1rem;
+    }
+
+    header h1 {
+      font-family:   var(--font-head);
+      font-size:     clamp(2.2rem, 5.5vw, 3.6rem);
+      font-weight:   800;
+      line-height:   1.08;
+      margin-bottom: 1.1rem;
+    }
+
+    header h1 span {
+      display:     block;
+      color:       var(--ink-3);
+      font-weight: 400;
+    }
+
+    header p {
+      font-size:   1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color:       var(--ink-2);
+      max-width:   480px;
+    }
+
+
+    /* ============================================
+       JUMP BAR
+    ============================================ */
+    .jump-bar {
+      max-width:   860px;
+      margin:      0 auto 2.5rem;
+      padding:     0 2rem;
+      display:     flex;
+      flex-wrap:   wrap;
+      align-items: center;
+      gap:         0.4rem;
+    }
+
+    .jump-label {
+      font-family:    var(--font-mono);
+      font-size:      0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color:          var(--ink-4);
+      margin-right:   0.3rem;
+    }
+
+    .jump-btn {
+      display:         inline-block;
+      text-decoration: none;
+      background:      var(--surface);
+      border:          1px solid var(--border);
+      color:           var(--ink-2);
+      font-family:     var(--font-body);
+      font-size:       0.75rem;
+      font-weight:     700;
+      padding:         0.28rem 0.78rem;
+      border-radius:   20px;
+      transition:      background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .jump-btn:hover {
+      background:   var(--ink);
+      border-color: var(--ink);
+      color:        var(--bg);
+    }
+
+    .jump-btn.all {
+      background:   var(--ink);
+      border-color: var(--ink);
+      color:        var(--bg);
+      font-family:  var(--font-mono);
+      font-size:    0.68rem;
+    }
+    .jump-btn.all:hover { opacity: 0.75; }
+
+
+    /* ============================================
+       MAIN LAYOUT
+    ============================================ */
+    main {
+      max-width:      860px;
+      margin:         0 auto;
+      padding:        0 2rem 6rem;
+      display:        flex;
+      flex-direction: column;
+      gap:            1.1rem;
+    }
+
+
+    /* ============================================
+       CATEGORY CARD
+    ============================================ */
+    .category-box {
+      background:    var(--surface);
+      border:        1px solid var(--border);
+      border-radius: 10px;
+      overflow:      hidden;
+      transition:    box-shadow 0.2s, border-color 0.2s;
+      scroll-margin-top: 80px;
+    }
+    .category-box:hover {
+      border-color: var(--border-strong);
+      box-shadow:   0 4px 18px rgba(0,0,0,0.07);
+    }
+
+    /* left accent bar per category */
+    .cat-general { border-left: 4px solid var(--general); }
+    .cat-dsl     { border-left: 4px solid var(--dsl);     }
+    .cat-web     { border-left: 4px solid var(--web);     }
+    .cat-mobile  { border-left: 4px solid var(--mobile);  }
+    .cat-data    { border-left: 4px solid var(--data);    }
+    .cat-game    { border-left: 4px solid var(--game);    }
+
+    /* header row inside card */
+    .category-header {
+      display:         flex;
+      align-items:     flex-start;
+      justify-content: space-between;
+      gap:             1rem;
+      padding:         1.25rem 1.5rem 0 1.4rem;
+    }
+
+    .category-meta { flex: 1; }
+
+    /* badge tag */
+    .category-tag {
+      display:        inline-block;
+      font-family:    var(--font-mono);
+      font-size:      0.6rem;
+      font-weight:    600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding:        0.18rem 0.5rem;
+      border-radius:  3px;
+      margin-bottom:  0.48rem;
+    }
+
+    .tag-general { background: var(--general-bg); color: var(--general); }
+    .tag-dsl     { background: var(--dsl-bg);     color: var(--dsl);     }
+    .tag-web     { background: var(--web-bg);      color: var(--web);     }
+    .tag-mobile  { background: var(--mobile-bg);  color: var(--mobile);  }
+    .tag-data    { background: var(--data-bg);    color: var(--data);    }
+    .tag-game    { background: var(--game-bg);    color: var(--game);    }
+
+    .category-header h3 {
+      font-family:   var(--font-head);
+      font-size:     1.08rem;
+      font-weight:   700;
+      line-height:   1.2;
+      color:         var(--ink);
+      margin-bottom: 0.38rem;
+    }
+
+    .category-desc {
+      font-size:   0.82rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color:       var(--ink-2);
+      max-width:   460px;
+    }
+
+    /* learn more button */
+    .learn-btn {
+      flex-shrink:    0;
+      margin-top:     0.1rem;
+      background:     transparent;
+      border:         1px solid var(--border-strong);
+      color:          var(--ink-3);
+      font-family:    var(--font-mono);
+      font-size:      0.67rem;
+      font-weight:    600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding:        0.36rem 0.82rem;
+      border-radius:  5px;
+      cursor:         pointer;
+      white-space:    nowrap;
+      transition:     background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .cat-general .learn-btn:hover { background: var(--general-bg); border-color: var(--general); color: var(--general); }
+    .cat-dsl     .learn-btn:hover { background: var(--dsl-bg);     border-color: var(--dsl);     color: var(--dsl);     }
+    .cat-web     .learn-btn:hover { background: var(--web-bg);      border-color: var(--web);     color: var(--web);     }
+    .cat-mobile  .learn-btn:hover { background: var(--mobile-bg);  border-color: var(--mobile);  color: var(--mobile);  }
+    .cat-data    .learn-btn:hover { background: var(--data-bg);    border-color: var(--data);    color: var(--data);    }
+    .cat-game    .learn-btn:hover { background: var(--game-bg);    border-color: var(--game);    color: var(--game);    }
+
+    /* divider */
+    .divider {
+      height:     1px;
+      background: var(--border);
+      margin:     1.1rem 1.5rem 0 1.4rem;
+    }
+
+    /* language chip row */
+    .language-container {
+      display:   flex;
+      flex-wrap: wrap;
+      gap:       0.5rem;
+      padding:   0.95rem 1.5rem 1.2rem 1.4rem;
+    }
+
+    .language-card {
+      background:     var(--bg);
+      border:         1px solid var(--border);
+      color:          var(--ink-2);
+      font-family:    var(--font-mono);
+      font-size:      0.8rem;
+      font-weight:    600;
+      letter-spacing: 0.03em;
+      padding:        0.4rem 0.95rem;
+      border-radius:  5px;
+      cursor:         pointer;
+      transition:     background 0.15s, border-color 0.15s, color 0.15s, transform 0.12s;
+    }
+    .language-card:hover { transform: translateY(-1px); }
+
+    .cat-general .language-card:hover { background: var(--general-bg); border-color: var(--general); color: var(--general); }
+    .cat-dsl     .language-card:hover { background: var(--dsl-bg);     border-color: var(--dsl);     color: var(--dsl);     }
+    .cat-web     .language-card:hover { background: var(--web-bg);      border-color: var(--web);     color: var(--web);     }
+    .cat-mobile  .language-card:hover { background: var(--mobile-bg);  border-color: var(--mobile);  color: var(--mobile);  }
+    .cat-data    .language-card:hover { background: var(--data-bg);    border-color: var(--data);    color: var(--data);    }
+    .cat-game    .language-card:hover { background: var(--game-bg);    border-color: var(--game);    color: var(--game);    }
+
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      border-top:     1px solid var(--border);
+      padding:        1.6rem 2rem;
+      text-align:     center;
+      color:          var(--ink-4);
+      font-family:    var(--font-mono);
+      font-size:      0.72rem;
+      letter-spacing: 0.06em;
+    }
+    footer a { color: var(--ink-2); text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+
+
+    /* ============================================
+       ANIMATIONS
+    ============================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header                     { animation: fadeUp 0.45s ease both; }
+    .jump-bar                  { animation: fadeUp 0.45s 0.08s ease both; }
+    .category-box              { animation: fadeUp 0.4s ease both; }
+    .category-box:nth-child(1) { animation-delay: 0.12s; }
+    .category-box:nth-child(2) { animation-delay: 0.18s; }
+    .category-box:nth-child(3) { animation-delay: 0.24s; }
+    .category-box:nth-child(4) { animation-delay: 0.30s; }
+    .category-box:nth-child(5) { animation-delay: 0.36s; }
+    .category-box:nth-child(6) { animation-delay: 0.42s; }
+
+  </style>
 </head>
 <body>
 
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="hero-bg">
-    <div class="hero-orb orb1"></div>
-    <div class="hero-orb orb2"></div>
-    <div class="hero-orb orb3"></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-badge">⚡ Your Learning Hub</div>
-    <h1>Coding Language<br><span>Academy</span></h1>
-    <p class="hero-sub">Explore 18 programming languages across 6 domains — from web & mobile to AI, game dev, and beyond.</p>
-    <div class="hero-cta">
-      <button class="btn-primary" onclick="document.querySelector('.main').scrollIntoView({behavior:'smooth'})">Explore Languages</button>
-      <button class="btn-secondary" onclick="document.querySelector('#search-input').focus(); document.querySelector('.main').scrollIntoView({behavior:'smooth'})">🔍 Search</button>
-    </div>
-  </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    scroll
-  </div>
-</section>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">CLA</a>
+    <a class="nav-link" href="#general">General</a>
+    <a class="nav-link" href="#dsl">DSL</a>
+    <a class="nav-link" href="#web">Web</a>
+    <a class="nav-link" href="#mobile">Mobile</a>
+    <a class="nav-link" href="#data">Data &amp; AI</a>
+    <a class="nav-link" href="#game">Game</a>
+    <a class="nav-cta"  href="all-languages.html">All 18 &rarr;</a>
+  </nav>
 
-<!-- ── STATS ── -->
-<div class="stats-bar">
-  <div class="stat">
-    <div class="stat-num">18</div>
-    <div class="stat-label">Languages</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">6</div>
-    <div class="stat-label">Categories</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">∞</div>
-    <div class="stat-label">Possibilities</div>
-  </div>
-</div>
+  <!-- HERO -->
+  <header>
+    <p class="hero-eyebrow">Coding Language Academy</p>
+    <h1>Every language<span>has a purpose.</span></h1>
+    <p>Explore the programming languages shaping modern software — grouped by what they're built to do.</p>
+  </header>
 
-<!-- ── MAIN ── -->
-<main class="main">
-
-  <!-- Search -->
-  <div class="search-bar">
-    <span class="search-icon">🔍</span>
-    <input id="search-input" type="text" placeholder="Search languages, paradigms, use cases…" oninput="filterLanguages(this.value)">
+  <!-- JUMP BAR -->
+  <div class="jump-bar">
+    <span class="jump-label">Jump &rarr;</span>
+    <a class="jump-btn" href="#general">General-Purpose</a>
+    <a class="jump-btn" href="#dsl">Domain-Specific</a>
+    <a class="jump-btn" href="#web">Web Dev</a>
+    <a class="jump-btn" href="#mobile">Mobile</a>
+    <a class="jump-btn" href="#data">Data &amp; AI</a>
+    <a class="jump-btn" href="#game">Game Dev</a>
+    <a class="jump-btn all" href="all-languages.html">View All 18 &rarr;</a>
   </div>
 
-  <div class="section-label">
-    <h2>All Categories</h2>
-    <div class="section-label-line"></div>
-  </div>
+  <!-- CATEGORIES -->
+  <main>
 
-  <!-- ── CATEGORIES ── -->
-  <div class="categories" id="categories-container">
-
-    <!-- GENERAL PURPOSE -->
-    <div class="category" data-cat="general-purpose">
-      <div class="category-header" onclick="toggleCategory(this.parentElement)">
-        <div class="cat-title-group">
-          <div class="cat-icon" style="background: rgba(74,222,128,0.12); color: var(--general);">🛠️</div>
-          <div>
-            <div class="cat-title">General-Purpose Languages</div>
-            <div class="cat-count">3 languages · PHP · Java · C</div>
-          </div>
+    <section class="category-box cat-general" id="general">
+      <div class="category-header">
+        <div class="category-meta">
+          <span class="category-tag tag-general">General-Purpose</span>
+          <h3>General-Purpose Languages</h3>
+          <p class="category-desc">Designed to solve a wide range of problems across many domains — from web backends and enterprise systems to scripting and embedded software. The workhorses of the industry.</p>
         </div>
-        <div class="cat-header-right">
-          <button class="cat-learn-btn" style="border-color: var(--general); color: var(--general);" onclick="event.stopPropagation(); window.location.href='General-Purpose.html';">View Detail Page →</button>
-          <div class="cat-chevron">▾</div>
-        </div>
+        <button class="learn-btn" onclick="location.href='General-Purpose.html'">Learn More &rarr;</button>
       </div>
-      <div class="lang-grid-wrapper">
-        <div class="lang-grid">
-
-          <div class="lang-card" style="--card-color: var(--general);" onclick="openModal('php')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(136,146,191,0.15);">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="PHP">
-              </div>
-              <div class="lang-name">PHP</div>
-            </div>
-            <div class="lang-desc">Server-side scripting powering millions of websites with seamless database integration.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #8892bf; color: #8892bf;">Backend</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Web Dev</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--general);" onclick="openModal('java')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(244,67,54,0.12);">
-                <img src="https://download.logo.wine/logo/Java_(programming_language)/Java_(programming_language)-Logo.wine.png" alt="Java">
-              </div>
-              <div class="lang-name">Java</div>
-            </div>
-            <div class="lang-desc">Platform-independent OOP powerhouse behind enterprise systems and Android development.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #f44336; color: #f44336;">Enterprise</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Android</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--general);" onclick="openModal('c')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(76,175,80,0.12);">
-                <img src="https://www.vhv.rs/dpng/d/80-805562_c-programming-language-icon-hd-png-download.png" alt="C">
-              </div>
-              <div class="lang-name">C</div>
-            </div>
-            <div class="lang-desc">Foundational procedural language with direct memory control — the mother of modern languages.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #4caf50; color: #4caf50;">Systems</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Embedded</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-        </div>
+      <div class="divider"></div>
+      <div class="language-container">
+        <button class="language-card">PHP</button>
+        <button class="language-card" onclick="location.href='JAVA.html'">Java</button>
+        <button class="language-card">C</button>
       </div>
-    </div>
+    </section>
 
-    <!-- DOMAIN SPECIFIC -->
-    <div class="category" data-cat="domain-specific">
-      <div class="category-header" onclick="toggleCategory(this.parentElement)">
-        <div class="cat-title-group">
-          <div class="cat-icon" style="background: rgba(249,115,22,0.12); color: var(--domain);">🎯</div>
-          <div>
-            <div class="cat-title">Domain-Specific Languages</div>
-            <div class="cat-count">3 languages · SQL · MATLAB · Regex</div>
-          </div>
+    <section class="category-box cat-dsl" id="dsl">
+      <div class="category-header">
+        <div class="category-meta">
+          <span class="category-tag tag-dsl">Domain-Specific</span>
+          <h3>Domain-Specific Languages (DSLs)</h3>
+          <p class="category-desc">Purpose-built for a narrow, well-defined task. DSLs are optimized for expressiveness within their domain — making complex tasks within that niche far simpler than a general-purpose language ever could.</p>
         </div>
-        <div class="cat-header-right">
-          <button class="cat-learn-btn" style="border-color: var(--domain); color: var(--domain);" onclick="event.stopPropagation(); window.location.href='Domain-Specific.html';">View Detail Page →</button>
-          <div class="cat-chevron">▾</div>
-        </div>
+        <button class="learn-btn">Learn More &rarr;</button>
       </div>
-      <div class="lang-grid-wrapper">
-        <div class="lang-grid">
-
-          <div class="lang-card" style="--card-color: var(--domain);" onclick="openModal('sql')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(0,117,143,0.15); font-size:1.1rem; color:#00758f;">SQL</div>
-              <div class="lang-name">SQL</div>
-            </div>
-            <div class="lang-desc">The language of data — query, manage, and transform relational databases with declarative elegance.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #00758f; color: #00758f;">Databases</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Declarative</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--domain);" onclick="openModal('matlab')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(233,127,2,0.12); font-size:0.85rem; font-weight:800; color:#e97f02;">MAT</div>
-              <div class="lang-name">MATLAB</div>
-            </div>
-            <div class="lang-desc">High-level environment for numerical computing, data analysis, and visualization in science & engineering.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #e97f02; color: #e97f02;">Scientific</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Engineering</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--domain);" onclick="openModal('regex')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(156,39,176,0.12); font-size:1rem; color:#9c27b0;">.*</div>
-              <div class="lang-name">Regex</div>
-            </div>
-            <div class="lang-desc">A concise pattern mini-language for searching, matching, and manipulating text with surgical precision.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #9c27b0; color: #9c27b0;">Text</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Pattern</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-        </div>
+      <div class="divider"></div>
+      <div class="language-container">
+        <button class="language-card">SQL</button>
+        <button class="language-card">HTML</button>
+        <button class="language-card">CSS</button>
       </div>
-    </div>
+    </section>
 
-    <!-- WEB DEVELOPMENT -->
-    <div class="category" data-cat="web-development">
-      <div class="category-header" onclick="toggleCategory(this.parentElement)">
-        <div class="cat-title-group">
-          <div class="cat-icon" style="background: rgba(56,189,248,0.12); color: var(--web);">🌐</div>
-          <div>
-            <div class="cat-title">Web Development Languages</div>
-            <div class="cat-count">3 languages · React · HTML&CSS · Angular</div>
-          </div>
+    <section class="category-box cat-web" id="web">
+      <div class="category-header">
+        <div class="category-meta">
+          <span class="category-tag tag-web">Web Development</span>
+          <h3>Web Development Languages</h3>
+          <p class="category-desc">The trio powering the internet. HTML structures content, CSS controls presentation, and JavaScript adds interactivity — together they form the foundation of every website you visit.</p>
         </div>
-        <div class="cat-header-right">
-          <button class="cat-learn-btn" style="border-color: var(--web); color: var(--web);" onclick="event.stopPropagation(); window.location.href='Web-Development.html';">View Detail Page →</button>
-          <div class="cat-chevron">▾</div>
-        </div>
+        <button class="learn-btn">Learn More &rarr;</button>
       </div>
-      <div class="lang-grid-wrapper">
-        <div class="lang-grid">
-
-          <div class="lang-card" style="--card-color: var(--web);" onclick="openModal('react')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(97,218,251,0.12); font-size:1.6rem;">⚛️</div>
-              <div class="lang-name">React</div>
-            </div>
-            <div class="lang-desc">Facebook's component-based JS library for building blazing-fast, reactive single-page UIs.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #61dafb; color: #61dafb;">Frontend</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">SPA</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--web);" onclick="openModal('htmlcss')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(227,79,38,0.12); font-size:1.2rem;">🏗️</div>
-              <div class="lang-name">HTML & CSS</div>
-            </div>
-            <div class="lang-desc">The foundational building blocks of every webpage — structure with HTML, beauty with CSS.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #e34f26; color: #e34f26;">Markup</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Styling</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--web);" onclick="openModal('angular')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(221,0,49,0.12); font-size:1.6rem;">🔺</div>
-              <div class="lang-name">Angular</div>
-            </div>
-            <div class="lang-desc">Google's full-featured TypeScript framework for enterprise-scale, production-grade web applications.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #dd0031; color: #dd0031;">Enterprise</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">TypeScript</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-        </div>
+      <div class="divider"></div>
+      <div class="language-container">
+        <button class="language-card">JavaScript</button>
+        <button class="language-card">HTML</button>
+        <button class="language-card">CSS</button>
       </div>
-    </div>
+    </section>
 
-    <!-- MOBILE DEVELOPMENT -->
-    <div class="category" data-cat="mobile-development">
-      <div class="category-header" onclick="toggleCategory(this.parentElement)">
-        <div class="cat-title-group">
-          <div class="cat-icon" style="background: rgba(244,114,182,0.12); color: var(--mobile);">📱</div>
-          <div>
-            <div class="cat-title">Mobile Development Languages</div>
-            <div class="cat-count">3 languages · Swift · Kotlin · Ruby</div>
-          </div>
+    <section class="category-box cat-mobile" id="mobile">
+      <div class="category-header">
+        <div class="category-meta">
+          <span class="category-tag tag-mobile">Mobile Development</span>
+          <h3>Mobile Development Languages</h3>
+          <p class="category-desc">Languages tailored for building native and cross-platform mobile apps. Swift dominates iOS, Kotlin powers Android, and Dart via Flutter bridges both platforms from a single codebase.</p>
         </div>
-        <div class="cat-header-right">
-          <button class="cat-learn-btn" style="border-color: var(--mobile); color: var(--mobile);" onclick="event.stopPropagation(); window.location.href='Mobile-Development.html';">View Detail Page →</button>
-          <div class="cat-chevron">▾</div>
-        </div>
+        <button class="learn-btn">Learn More &rarr;</button>
       </div>
-      <div class="lang-grid-wrapper">
-        <div class="lang-grid">
-
-          <div class="lang-card" style="--card-color: var(--mobile);" onclick="openModal('swift')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(255,88,36,0.12); font-size:1.6rem;">🦅</div>
-              <div class="lang-name">Swift</div>
-            </div>
-            <div class="lang-desc">Apple's powerful, safe, and expressive language for building iOS, macOS, and watchOS apps.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #ff5824; color: #ff5824;">iOS</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Apple</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--mobile);" onclick="openModal('kotlin')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(127,82,255,0.12); font-size:1.6rem;">🟣</div>
-              <div class="lang-name">Kotlin</div>
-            </div>
-            <div class="lang-desc">Google's preferred language for Android — concise, safe, and fully Java-interoperable with coroutines.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #7f52ff; color: #7f52ff;">Android</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">JVM</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--mobile);" onclick="openModal('ruby')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(204,52,45,0.12); font-size:1.6rem;">💎</div>
-              <div class="lang-name">Ruby</div>
-            </div>
-            <div class="lang-desc">Elegant, developer-friendly language used in mobile via RubyMotion and famed for rapid prototyping.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #cc342d; color: #cc342d;">Scripting</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Prototyping</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-        </div>
+      <div class="divider"></div>
+      <div class="language-container">
+        <button class="language-card">Swift</button>
+        <button class="language-card">Kotlin</button>
+        <button class="language-card">Dart</button>
       </div>
-    </div>
+    </section>
 
-    <!-- DATA SCIENCE & AI -->
-    <div class="category" data-cat="data-science">
-      <div class="category-header" onclick="toggleCategory(this.parentElement)">
-        <div class="cat-title-group">
-          <div class="cat-icon" style="background: rgba(167,139,250,0.12); color: var(--data);">🤖</div>
-          <div>
-            <div class="cat-title">Data Science & AI Languages</div>
-            <div class="cat-count">3 languages · Python · R · Julia</div>
-          </div>
+    <section class="category-box cat-data" id="data">
+      <div class="category-header">
+        <div class="category-meta">
+          <span class="category-tag tag-data">Data Science &amp; AI</span>
+          <h3>Data Science &amp; AI Languages</h3>
+          <p class="category-desc">The languages behind machine learning, statistical analysis, and scientific computing. Python leads with its vast ecosystem, R excels at statistical visualization, and Julia delivers near-C numerical performance.</p>
         </div>
-        <div class="cat-header-right">
-          <button class="cat-learn-btn" style="border-color: var(--data); color: var(--data);" onclick="event.stopPropagation(); window.location.href='Data-Science-&-AI.html';">View Detail Page →</button>
-          <div class="cat-chevron">▾</div>
-        </div>
+        <button class="learn-btn">Learn More &rarr;</button>
       </div>
-      <div class="lang-grid-wrapper">
-        <div class="lang-grid">
-
-          <div class="lang-card" style="--card-color: var(--data);" onclick="openModal('python')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(55,118,171,0.15);">
-                <img src="https://logos-world.net/wp-content/uploads/2021/10/Python-Symbol.png" alt="Python">
-              </div>
-              <div class="lang-name">Python</div>
-            </div>
-            <div class="lang-desc">The dominant AI & data science language with TensorFlow, PyTorch, Pandas, and an infinite ecosystem.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #3776ab; color: #3776ab;">AI / ML</span>
-              <span class="lang-tag" style="border-color: #ffd43b; color: #ffd43b;">Data</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--data);" onclick="openModal('r')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(39,109,194,0.15);">
-                <img src="https://www.clipartmax.com/png/middle/13-137348_logo-r-programming.png" alt="R">
-              </div>
-              <div class="lang-name">R</div>
-            </div>
-            <div class="lang-desc">Built for statistics — the gold standard for data visualization, modeling, and academic research.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #276dc2; color: #276dc2;">Statistics</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Visualization</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--data);" onclick="openModal('julia')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(167,108,174,0.15);">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" alt="Julia">
-              </div>
-              <div class="lang-name">Julia</div>
-            </div>
-            <div class="lang-desc">High-performance scientific computing with C-like speed and Python-like expressiveness.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #a76cae; color: #a76cae;">HPC</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Scientific</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-        </div>
+      <div class="divider"></div>
+      <div class="language-container">
+        <button class="language-card" onclick="location.href='Python.html'">Python</button>
+        <button class="language-card">R</button>
+        <button class="language-card">Julia</button>
       </div>
-    </div>
+    </section>
 
-    <!-- GAME DEVELOPMENT -->
-    <div class="category" data-cat="game-development">
-      <div class="category-header" onclick="toggleCategory(this.parentElement)">
-        <div class="cat-title-group">
-          <div class="cat-icon" style="background: rgba(251,146,60,0.12); color: var(--game);">🎮</div>
-          <div>
-            <div class="cat-title">Game Development Languages</div>
-            <div class="cat-count">3 languages · C# · C++ · Lua</div>
-          </div>
+    <section class="category-box cat-game" id="game">
+      <div class="category-header">
+        <div class="category-meta">
+          <span class="category-tag tag-game">Game Development</span>
+          <h3>Game Development Languages</h3>
+          <p class="category-desc">From indie titles to AAA studios, these handle real-time rendering, physics, and game logic. C# is Unity's backbone, C++ powers Unreal Engine, and Lua is the go-to scripting language for modding systems.</p>
         </div>
-        <div class="cat-header-right">
-          <button class="cat-learn-btn" style="border-color: var(--game); color: var(--game);" onclick="event.stopPropagation(); window.location.href='Game-Development.html';">View Detail Page →</button>
-          <div class="cat-chevron">▾</div>
-        </div>
+        <button class="learn-btn">Learn More &rarr;</button>
       </div>
-      <div class="lang-grid-wrapper">
-        <div class="lang-grid">
-
-          <div class="lang-card" style="--card-color: var(--game);" onclick="openModal('csharp')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(104,33,122,0.15);">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/C_Sharp_logo.png" alt="C#">
-              </div>
-              <div class="lang-name">C#</div>
-            </div>
-            <div class="lang-desc">Microsoft's modern OOP language — the heart of Unity, powering millions of 2D and 3D games.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #68217a; color: #68217a;">Unity</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">OOP</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--game);" onclick="openModal('cpp')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(0,89,156,0.15);">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++">
-              </div>
-              <div class="lang-name">C++</div>
-            </div>
-            <div class="lang-desc">The AAA game engine standard — Unreal, Godot's core, and countless industry titles run on C++.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #00599c; color: #00599c;">Unreal</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Performance</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-          <div class="lang-card" style="--card-color: var(--game);" onclick="openModal('lua')">
-            <div class="lang-card-top">
-              <div class="lang-logo" style="background: rgba(0,0,128,0.15);">
-                <img src="https://www.lua.org/images/lua-logo.gif" alt="Lua">
-              </div>
-              <div class="lang-name">Lua</div>
-            </div>
-            <div class="lang-desc">Lightweight embeddable scripting for game logic and modding — Roblox and WoW both run Lua.</div>
-            <div class="lang-tags">
-              <span class="lang-tag" style="border-color: #000080; color: #6060cc;">Scripting</span>
-              <span class="lang-tag" style="border-color: rgba(255,255,255,0.15); color: var(--muted);">Roblox</span>
-            </div>
-            <div class="lang-arrow">↗</div>
-          </div>
-
-        </div>
+      <div class="divider"></div>
+      <div class="language-container">
+        <button class="language-card">C#</button>
+        <button class="language-card">C++</button>
+        <button class="language-card">Lua</button>
       </div>
-    </div>
+    </section>
 
-  </div><!-- /categories -->
-</main>
+  </main>
 
-<!-- ── MODAL ── -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnOverlay(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-icon" id="modal-icon"></div>
-    <div class="modal-title" id="modal-title"></div>
-    <div class="modal-category" id="modal-category"></div>
-    <div class="modal-desc" id="modal-desc"></div>
-    <div class="modal-specs" id="modal-specs"></div>
-    <div class="modal-actions">
-      <button class="modal-btn-primary" id="modal-btn" onclick="">Open Full Page</button>
-      <button class="modal-btn-secondary" onclick="closeModal()">Close</button>
-    </div>
-  </div>
-</div>
+  <footer>
+    Coding Language Academy &mdash;
+    <a href="all-languages.html">View all 18 languages &rarr;</a>
+  </footer>
 
-<footer>
-  <p>© 2025 <span>Coding Language Academy</span> · Built to inspire developers</p>
-</footer>
-
-<script>
-  const DATA = {
-    php: {
-      name: 'PHP', category: 'General-Purpose', icon: '🐘',
-      img: 'https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg',
-      desc: 'PHP is a popular server-side scripting language especially suited for web development, powering over 77% of websites with seamless database integration and rapid deployment.',
-      specs: [
-        {label: 'Primary Use', value: 'Backend Web Development'},
-        {label: 'Paradigm', value: 'Procedural / OOP / Scripting'},
-        {label: 'Strength', value: 'Database integration & rapid prototyping'},
-        {label: 'Created', value: '1994 by Rasmus Lerdorf'},
-      ],
-      color: '#8892BF', page: 'PHP.html'
-    },
-    java: {
-      name: 'Java', category: 'General-Purpose', icon: '☕',
-      img: 'https://download.logo.wine/logo/Java_(programming_language)/Java_(programming_language)-Logo.wine.png',
-      desc: 'Java is a robust, high-level, object-oriented language famous for its platform independence via the JVM — write once, run anywhere. Powers Android and massive enterprise systems.',
-      specs: [
-        {label: 'Primary Use', value: 'Enterprise Apps & Android'},
-        {label: 'Paradigm', value: 'Object-Oriented'},
-        {label: 'Strength', value: 'Platform independence & vast ecosystem'},
-        {label: 'Created', value: '1995 by James Gosling'},
-      ],
-      color: '#f44336', page: 'JAVA.html'
-    },
-    c: {
-      name: 'C', category: 'General-Purpose', icon: '⚙️',
-      img: 'https://www.vhv.rs/dpng/d/80-805562_c-programming-language-icon-hd-png-download.png',
-      desc: 'C is the foundational procedural language that directly shaped nearly every modern language. Offers raw memory control, blazing performance, and underpins operating systems worldwide.',
-      specs: [
-        {label: 'Primary Use', value: 'Systems & Embedded Programming'},
-        {label: 'Paradigm', value: 'Procedural'},
-        {label: 'Strength', value: 'Speed, efficiency & low-level control'},
-        {label: 'Created', value: '1972 by Dennis Ritchie'},
-      ],
-      color: '#4caf50', page: 'C.html'
-    },
-    sql: {
-      name: 'SQL', category: 'Domain-Specific', icon: '🗄️',
-      desc: 'SQL (Structured Query Language) is the universal language for relational databases. Its declarative syntax makes complex data manipulation and retrieval intuitive and powerful.',
-      specs: [
-        {label: 'Primary Use', value: 'Database querying & management'},
-        {label: 'Paradigm', value: 'Declarative'},
-        {label: 'Strength', value: 'Efficient data manipulation'},
-        {label: 'Created', value: '1974 by IBM researchers'},
-      ],
-      color: '#00758f', page: 'SQL.html'
-    },
-    matlab: {
-      name: 'MATLAB', category: 'Domain-Specific', icon: '📊',
-      desc: 'MATLAB is a high-level language and interactive environment focused on numerical computing, data analysis, and visualization, widely used in engineering, physics, and finance.',
-      specs: [
-        {label: 'Primary Use', value: 'Scientific & engineering computations'},
-        {label: 'Paradigm', value: 'Procedural / Matrix-based'},
-        {label: 'Strength', value: 'Built-in math functions and toolboxes'},
-        {label: 'Created', value: '1984 by MathWorks'},
-      ],
-      color: '#e97f02', page: 'MATLAB.html'
-    },
-    regex: {
-      name: 'Regex', category: 'Domain-Specific', icon: '🔍',
-      desc: 'Regular Expressions are a concise pattern mini-language for defining search patterns in text. Found in virtually every programming language, they are essential for text processing and validation.',
-      specs: [
-        {label: 'Primary Use', value: 'Text processing & pattern matching'},
-        {label: 'Paradigm', value: 'Pattern-based / Declarative'},
-        {label: 'Strength', value: 'Concise text search and validation'},
-        {label: 'Conceived', value: '1951 by Stephen Kleene'},
-      ],
-      color: '#9c27b0', page: 'Regex.html'
-    },
-    react: {
-      name: 'React', category: 'Web Development', icon: '⚛️',
-      desc: 'React is Facebook\'s declarative, component-based JavaScript library for building user interfaces. Its virtual DOM and massive ecosystem have made it the most popular frontend framework in the world.',
-      specs: [
-        {label: 'Primary Use', value: 'Front-end UI development'},
-        {label: 'Paradigm', value: 'Declarative, component-based'},
-        {label: 'Strength', value: 'Reusable components & virtual DOM'},
-        {label: 'Released', value: '2013 by Meta (Facebook)'},
-      ],
-      color: '#61dafb', page: 'React.html'
-    },
-    htmlcss: {
-      name: 'HTML & CSS', category: 'Web Development', icon: '🏗️',
-      desc: 'HTML provides the semantic structure of every webpage while CSS adds visual design and layout. Together they are the universal foundation of the entire World Wide Web.',
-      specs: [
-        {label: 'Primary Use', value: 'Web page structure & presentation'},
-        {label: 'Paradigm', value: 'Markup & declarative styling'},
-        {label: 'Strength', value: 'Universal browser support'},
-        {label: 'HTML Released', value: '1993 by Tim Berners-Lee'},
-      ],
-      color: '#e34f26', page: 'HTMLCSS.html'
-    },
-    angular: {
-      name: 'Angular', category: 'Web Development', icon: '🔺',
-      desc: 'Angular is Google\'s comprehensive TypeScript-based framework for building enterprise-scale single-page applications with two-way data binding, dependency injection, and a full MVC architecture.',
-      specs: [
-        {label: 'Primary Use', value: 'Enterprise-scale web applications'},
-        {label: 'Paradigm', value: 'Component-based, MVC'},
-        {label: 'Strength', value: 'Full-featured framework with DI'},
-        {label: 'Released', value: '2016 by Google'},
-      ],
-      color: '#dd0031', page: 'Angular.html'
-    },
-    swift: {
-      name: 'Swift', category: 'Mobile Development', icon: '🦅',
-      desc: 'Swift is Apple\'s powerful, intuitive, and safe programming language for iOS, macOS, watchOS, and tvOS. It combines modern syntax with C-level performance and strong type safety.',
-      specs: [
-        {label: 'Primary Use', value: 'Native iOS & Apple ecosystem apps'},
-        {label: 'Paradigm', value: 'Multi-paradigm (protocol-oriented)'},
-        {label: 'Strength', value: 'Performance, safety & modern syntax'},
-        {label: 'Released', value: '2014 by Apple'},
-      ],
-      color: '#ff5824', page: 'Swift.html'
-    },
-    kotlin: {
-      name: 'Kotlin', category: 'Mobile Development', icon: '🟣',
-      desc: 'Kotlin is the modern, concise language preferred by Google for Android development. Fully interoperable with Java, it adds null safety, coroutines, and a far more expressive syntax.',
-      specs: [
-        {label: 'Primary Use', value: 'Native Android apps'},
-        {label: 'Paradigm', value: 'Multi-paradigm (OOP, functional)'},
-        {label: 'Strength', value: 'Null safety, conciseness & coroutines'},
-        {label: 'Released', value: '2011 by JetBrains'},
-      ],
-      color: '#7f52ff', page: 'Kotlin.html'
-    },
-    ruby: {
-      name: 'Ruby', category: 'Mobile Development', icon: '💎',
-      desc: 'Ruby is an elegant, developer-first dynamic language renowned for productivity and happiness. Used in mobile via RubyMotion, and famously powers Ruby on Rails for web backends.',
-      specs: [
-        {label: 'Primary Use', value: 'Prototyping & mobile (RubyMotion)'},
-        {label: 'Paradigm', value: 'Multi-paradigm (OOP, functional)'},
-        {label: 'Strength', value: 'Developer happiness & rapid prototyping'},
-        {label: 'Created', value: '1995 by Yukihiro Matsumoto'},
-      ],
-      color: '#cc342d', page: 'Ruby.html'
-    },
-    python: {
-      name: 'Python', category: 'Data Science & AI', icon: '🐍',
-      img: 'https://logos-world.net/wp-content/uploads/2021/10/Python-Symbol.png',
-      desc: 'The dominant language in data science and AI, with powerful libraries like Pandas, NumPy, Scikit-learn, TensorFlow, and PyTorch. Python\'s readable syntax and community make it unbeatable for ML.',
-      specs: [
-        {label: 'Primary Use', value: 'Data analysis, ML & deep learning'},
-        {label: 'Paradigm', value: 'Multi-paradigm'},
-        {label: 'Strength', value: 'Vast ecosystem and community'},
-        {label: 'Created', value: '1991 by Guido van Rossum'},
-      ],
-      color: '#3776ab', page: 'Python.html'
-    },
-    r: {
-      name: 'R', category: 'Data Science & AI', icon: '📈',
-      img: 'https://www.clipartmax.com/png/middle/13-137348_logo-r-programming.png',
-      desc: 'R is a language and environment specifically designed for statistical computing, graphics, and data analysis, with ggplot2 being the gold standard for data visualization.',
-      specs: [
-        {label: 'Primary Use', value: 'Statistical modeling & visualization'},
-        {label: 'Paradigm', value: 'Multi-paradigm (functional, OOP)'},
-        {label: 'Strength', value: 'Advanced stats packages & ggplot2'},
-        {label: 'Released', value: '1993 by Ross Ihaka & Robert Gentleman'},
-      ],
-      color: '#276dc2', page: 'R.html'
-    },
-    julia: {
-      name: 'Julia', category: 'Data Science & AI', icon: '⚡',
-      img: 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg',
-      desc: 'Julia delivers high-performance technical computing combining C-comparable speed with dynamic, expressive syntax. Ideal for numerical analysis, scientific computing, and HPC.',
-      specs: [
-        {label: 'Primary Use', value: 'High-performance numerical analysis'},
-        {label: 'Paradigm', value: 'Multi-paradigm (multiple dispatch)'},
-        {label: 'Strength', value: 'Speed comparable to C with dynamic syntax'},
-        {label: 'Released', value: '2012 by MIT researchers'},
-      ],
-      color: '#a76cae', page: 'Julia.html'
-    },
-    csharp: {
-      name: 'C#', category: 'Game Development', icon: '🎯',
-      img: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/C_Sharp_logo.png',
-      desc: 'C# is Microsoft\'s elegant object-oriented language that powers Unity — the most popular game engine for 2D and 3D games. Also used for apps, enterprise software, and VR experiences.',
-      specs: [
-        {label: 'Primary Use', value: 'Unity game development'},
-        {label: 'Paradigm', value: 'Object-oriented, event-driven'},
-        {label: 'Strength', value: 'Productivity & deep Unity integration'},
-        {label: 'Released', value: '2000 by Microsoft (Anders Hejlsberg)'},
-      ],
-      color: '#68217a', page: 'CSharp.html'
-    },
-    cpp: {
-      name: 'C++', category: 'Game Development', icon: '🚀',
-      img: 'https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg',
-      desc: 'C++ is the industry standard for high-performance games and engines. Unreal Engine, Godot\'s core, and virtually every AAA game title rely on C++ for raw speed and hardware control.',
-      specs: [
-        {label: 'Primary Use', value: 'Game engines & performance-critical games'},
-        {label: 'Paradigm', value: 'Multi-paradigm'},
-        {label: 'Strength', value: 'Speed and low-level control'},
-        {label: 'Created', value: '1985 by Bjarne Stroustrup'},
-      ],
-      color: '#00599c', page: 'CPP.html'
-    },
-    lua: {
-      name: 'Lua', category: 'Game Development', icon: '🌙',
-      img: 'https://www.lua.org/images/lua-logo.gif',
-      desc: 'Lua is an ultra-lightweight embeddable scripting language that excels at game logic and modding. Roblox, World of Warcraft, and countless game engines embed Lua for scripting.',
-      specs: [
-        {label: 'Primary Use', value: 'Game scripting & extensions'},
-        {label: 'Paradigm', value: 'Multi-paradigm (scripting)'},
-        {label: 'Strength', value: 'Simplicity and fast embedding'},
-        {label: 'Created', value: '1993 by PUC-Rio'},
-      ],
-      color: '#000080', page: 'Lua.html'
-    },
-  };
-
-  function toggleCategory(el) {
-    el.classList.toggle('open');
-  }
-
-  function openModal(id) {
-    const d = DATA[id];
-    if (!d) return;
-
-    const iconEl = document.getElementById('modal-icon');
-    iconEl.style.background = d.color + '20';
-    if (d.img) {
-      iconEl.innerHTML = `<img src="${d.img}" alt="${d.name}" style="width:100%;height:100%;object-fit:contain;padding:8px;">`;
-    } else {
-      iconEl.innerHTML = `<span style="font-size:2rem;">${d.icon}</span>`;
-    }
-
-    document.getElementById('modal-title').textContent = d.name;
-    document.getElementById('modal-title').style.color = d.color;
-    document.getElementById('modal-category').textContent = `${d.icon}  ${d.category}`;
-    document.getElementById('modal-desc').textContent = d.desc;
-
-    const specsEl = document.getElementById('modal-specs');
-    specsEl.innerHTML = d.specs.map(s => `
-      <div class="modal-spec">
-        <div class="modal-spec-label">${s.label}</div>
-        <div class="modal-spec-value">${s.value}</div>
-      </div>
-    `).join('');
-
-    const btn = document.getElementById('modal-btn');
-    btn.textContent = `Open ${d.name} Page →`;
-    btn.style.background = `linear-gradient(135deg, ${d.color}, ${d.color}cc)`;
-    btn.onclick = () => window.location.href = d.page;
-
-    document.getElementById('modal-overlay').classList.add('visible');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    document.getElementById('modal-overlay').classList.remove('visible');
-    document.body.style.overflow = '';
-  }
-
-  function closeModalOnOverlay(e) {
-    if (e.target === document.getElementById('modal-overlay')) closeModal();
-  }
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  function filterLanguages(q) {
-    q = q.toLowerCase().trim();
-    const allCards = document.querySelectorAll('.lang-card');
-    const allCategories = document.querySelectorAll('.category');
-
-    if (!q) {
-      allCards.forEach(c => c.style.display = '');
-      allCategories.forEach(c => {
-        c.style.display = '';
-        c.classList.remove('open');
-      });
-      return;
-    }
-
-    allCategories.forEach(cat => {
-      const cards = cat.querySelectorAll('.lang-card');
-      let anyVisible = false;
-      cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        const show = text.includes(q);
-        card.style.display = show ? '' : 'none';
-        if (show) anyVisible = true;
-      });
-      cat.style.display = anyVisible ? '' : 'none';
-      if (anyVisible) cat.classList.add('open');
-    });
-  }
-
-  // Open first category by default
-  document.querySelector('.category').classList.add('open');
-</script>
 </body>
 </html>

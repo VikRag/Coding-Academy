@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Languages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inconsolata:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* ============================================
+       DESIGN TOKENS
+    ============================================ */
+    :root {
+      /* base */
+      --bg:             #e8eef7;
+      --bg-warm:        #dde5f2;
+      --surface:        #f2f6fc;
+      --border:         #c5d0e4;
+      --border-strong:  #a3b3ce;
+
+      /* text scale */
+      --ink:            #0f1a2e;
+      --ink-2:          #2e3f5c;
+      --ink-3:          #6278a0;
+      --ink-4:          #9aaac4;
+
+      /* category accents */
+      --general:        #1d4ed8;
+      --general-bg:     #dbeafe;
+      --dsl:            #be123c;
+      --dsl-bg:         #ffe4e6;
+      --web:            #047857;
+      --web-bg:         #d1fae5;
+      --mobile:         #6d28d9;
+      --mobile-bg:      #ede9fe;
+      --data:           #b45309;
+      --data-bg:        #fef3c7;
+      --game:           #0e7490;
+      --game-bg:        #cffafe;
+
+      /* typography */
+      --font-head:      'Syne', sans-serif;
+      --font-mono:      'Inconsolata', monospace;
+      --font-body:      'Lato', sans-serif;
+    }
+
+
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      margin:     0;
+      padding:    0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:  var(--bg);
+      color:       var(--ink);
+      font-family: var(--font-body);
+      min-height:  100vh;
+    }
+
+
+    /* ============================================
+       NAVIGATION
+    ============================================ */
+    nav {
+      position:        sticky;
+      top:             0;
+      z-index:         100;
+      height:          54px;
+      padding:         0 2rem;
+      background:      rgba(232, 238, 247, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom:   1px solid var(--border);
+      display:         flex;
+      align-items:     center;
+      gap:             0.5rem;
+    }
+
+    .nav-logo {
+      font-family:     var(--font-head);
+      font-size:       1rem;
+      font-weight:     800;
+      letter-spacing:  0.04em;
+      color:           var(--ink);
+      text-decoration: none;
+      margin-right:    auto;
+    }
+
+    .nav-back {
+      display:         inline-block;
+      text-decoration: none;
+      background:      transparent;
+      border:          1px solid var(--border-strong);
+      color:           var(--ink-3);
+      font-family:     var(--font-mono);
+      font-size:       0.68rem;
+      font-weight:     600;
+      letter-spacing:  0.07em;
+      text-transform:  uppercase;
+      padding:         0.36rem 0.85rem;
+      border-radius:   5px;
+      transition:      background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .nav-back:hover {
+      background:   var(--ink);
+      border-color: var(--ink);
+      color:        var(--bg);
+    }
+
+
+    /* ============================================
+       HEADER
+    ============================================ */
+    header {
+      max-width: 1080px;
+      margin:    0 auto;
+      padding:   4rem 2rem 2.5rem;
+      animation: fadeUp 0.45s ease both;
+    }
+
+    .hero-eyebrow {
+      font-family:    var(--font-mono);
+      font-size:      0.7rem;
+      font-weight:    600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color:          var(--ink-3);
+      margin-bottom:  1rem;
+    }
+
+    header h1 {
+      font-family:   var(--font-head);
+      font-size:     clamp(2rem, 5vw, 3rem);
+      font-weight:   800;
+      line-height:   1.08;
+      margin-bottom: 0.8rem;
+    }
+
+    header h1 span {
+      display:     block;
+      color:       var(--ink-3);
+      font-weight: 400;
+    }
+
+    header p {
+      font-size:   0.95rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color:       var(--ink-2);
+      max-width:   440px;
+    }
+
+
+    /* ============================================
+       FILTER BAR
+    ============================================ */
+    .filter-bar {
+      max-width:   1080px;
+      margin:      0 auto 2.2rem;
+      padding:     0 2rem;
+      display:     flex;
+      flex-wrap:   wrap;
+      align-items: center;
+      gap:         0.4rem;
+      animation:   fadeUp 0.45s 0.08s ease both;
+    }
+
+    .filter-label {
+      font-family:    var(--font-mono);
+      font-size:      0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color:          var(--ink-4);
+      margin-right:   0.3rem;
+    }
+
+    .filter-btn {
+      background:  var(--surface);
+      border:      1px solid var(--border);
+      color:       var(--ink-2);
+      font-family: var(--font-body);
+      font-size:   0.75rem;
+      font-weight: 700;
+      padding:     0.28rem 0.78rem;
+      border-radius: 20px;
+      cursor:      pointer;
+      transition:  background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background:   var(--ink);
+      border-color: var(--ink);
+      color:        var(--bg);
+    }
+
+
+    /* ============================================
+       LANGUAGE GRID
+    ============================================ */
+    .lang-grid {
+      max-width: 1080px;
+      margin:    0 auto;
+      padding:   0 2rem 6rem;
+      display:   grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap:       1rem;
+    }
+
+
+    /* ============================================
+       LANGUAGE CARD
+    ============================================ */
+    .lang-card {
+      background:    var(--surface);
+      border:        1px solid var(--border);
+      border-radius: 10px;
+      padding:       1.3rem 1.4rem 1.4rem;
+      display:       flex;
+      flex-direction: column;
+      gap:           0.7rem;
+      animation:     fadeUp 0.4s ease both;
+      transition:    box-shadow 0.18s, border-color 0.18s, transform 0.14s;
+    }
+    .lang-card:hover {
+      border-color: var(--border-strong);
+      box-shadow:   0 4px 18px rgba(0,0,0,0.07);
+      transform:    translateY(-2px);
+    }
+
+    /* top accent bar per category */
+    .card-general { border-top: 3px solid var(--general); }
+    .card-dsl     { border-top: 3px solid var(--dsl);     }
+    .card-web     { border-top: 3px solid var(--web);     }
+    .card-mobile  { border-top: 3px solid var(--mobile);  }
+    .card-data    { border-top: 3px solid var(--data);    }
+    .card-game    { border-top: 3px solid var(--game);    }
+
+    .card-top {
+      display:     flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap:         0.5rem;
+    }
+
+    .card-name {
+      font-family: var(--font-head);
+      font-size:   1.3rem;
+      font-weight: 800;
+      line-height: 1;
+      color:       var(--ink);
+    }
+
+    /* category badge */
+    .card-tag {
+      font-family:    var(--font-mono);
+      font-size:      0.58rem;
+      font-weight:    600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding:        0.18rem 0.48rem;
+      border-radius:  3px;
+      white-space:    nowrap;
+      flex-shrink:    0;
+      margin-top:     2px;
+    }
+
+    .tag-general { background: var(--general-bg); color: var(--general); }
+    .tag-dsl     { background: var(--dsl-bg);     color: var(--dsl);     }
+    .tag-web     { background: var(--web-bg);      color: var(--web);     }
+    .tag-mobile  { background: var(--mobile-bg);  color: var(--mobile);  }
+    .tag-data    { background: var(--data-bg);    color: var(--data);    }
+    .tag-game    { background: var(--game-bg);    color: var(--game);    }
+
+    .card-desc {
+      font-size:   0.82rem;
+      font-weight: 300;
+      line-height: 1.62;
+      color:       var(--ink-2);
+    }
+
+    /* trait pills */
+    .card-meta {
+      display:   flex;
+      flex-wrap: wrap;
+      gap:       0.4rem;
+      margin-top: 0.1rem;
+    }
+
+    .meta-pill {
+      background:     var(--bg);
+      border:         1px solid var(--border);
+      font-family:    var(--font-mono);
+      font-size:      0.63rem;
+      font-weight:    500;
+      letter-spacing: 0.04em;
+      color:          var(--ink-3);
+      padding:        0.2rem 0.5rem;
+      border-radius:  4px;
+    }
+
+    /* year line */
+    .card-year {
+      font-family:    var(--font-mono);
+      font-size:      0.63rem;
+      letter-spacing: 0.05em;
+      color:          var(--ink-4);
+      padding-top:    0.5rem;
+      border-top:     1px solid var(--border);
+      margin-top:     auto;
+    }
+
+    /* filter hide */
+    .lang-card.hidden { display: none; }
+
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      border-top:     1px solid var(--border);
+      padding:        1.6rem 2rem;
+      text-align:     center;
+      color:          var(--ink-4);
+      font-family:    var(--font-mono);
+      font-size:      0.72rem;
+      letter-spacing: 0.06em;
+    }
+    footer a { color: var(--ink-2); text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+
+
+    /* ============================================
+       ANIMATIONS
+    ============================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .lang-card:nth-child(1)  { animation-delay: 0.05s; }
+    .lang-card:nth-child(2)  { animation-delay: 0.09s; }
+    .lang-card:nth-child(3)  { animation-delay: 0.13s; }
+    .lang-card:nth-child(4)  { animation-delay: 0.17s; }
+    .lang-card:nth-child(5)  { animation-delay: 0.21s; }
+    .lang-card:nth-child(6)  { animation-delay: 0.25s; }
+    .lang-card:nth-child(7)  { animation-delay: 0.29s; }
+    .lang-card:nth-child(8)  { animation-delay: 0.33s; }
+    .lang-card:nth-child(9)  { animation-delay: 0.37s; }
+    .lang-card:nth-child(10) { animation-delay: 0.41s; }
+    .lang-card:nth-child(11) { animation-delay: 0.45s; }
+    .lang-card:nth-child(12) { animation-delay: 0.49s; }
+    .lang-card:nth-child(13) { animation-delay: 0.53s; }
+    .lang-card:nth-child(14) { animation-delay: 0.57s; }
+    .lang-card:nth-child(15) { animation-delay: 0.61s; }
+    .lang-card:nth-child(16) { animation-delay: 0.65s; }
+    .lang-card:nth-child(17) { animation-delay: 0.69s; }
+    .lang-card:nth-child(18) { animation-delay: 0.73s; }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">CLA</a>
+    <a class="nav-back" href="index.html">&larr; Categories</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header>
+    <p class="hero-eyebrow">All Languages</p>
+    <h1>18 Languages,<span>one reference.</span></h1>
+    <p>Key facts, use cases, and context for every language covered in the academy.</p>
+  </header>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <span class="filter-label">Filter &rarr;</span>
+    <button class="filter-btn active" data-filter="all">All 18</button>
+    <button class="filter-btn" data-filter="general">General-Purpose</button>
+    <button class="filter-btn" data-filter="dsl">Domain-Specific</button>
+    <button class="filter-btn" data-filter="web">Web Dev</button>
+    <button class="filter-btn" data-filter="mobile">Mobile</button>
+    <button class="filter-btn" data-filter="data">Data &amp; AI</button>
+    <button class="filter-btn" data-filter="game">Game Dev</button>
+  </div>
+
+  <!-- GRID -->
+  <div class="lang-grid">
+
+    <!-- GENERAL PURPOSE -->
+    <div class="lang-card card-general" data-cat="general">
+      <div class="card-top">
+        <span class="card-name">PHP</span>
+        <span class="card-tag tag-general">General-Purpose</span>
+      </div>
+      <p class="card-desc">A server-side scripting language powering a huge portion of the web, including WordPress. Known for rapid database integration and quick web backend development.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Server-Side</span>
+        <span class="meta-pill">Interpreted</span>
+        <span class="meta-pill">Dynamic Typing</span>
+      </div>
+      <div class="card-year">1994 &mdash; Rasmus Lerdorf</div>
+    </div>
+
+    <div class="lang-card card-general" data-cat="general">
+      <div class="card-top">
+        <span class="card-name">Java</span>
+        <span class="card-tag tag-general">General-Purpose</span>
+      </div>
+      <p class="card-desc">Object-oriented language built on "write once, run anywhere." The cornerstone of enterprise software and Android development, running on the JVM for platform independence.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Object-Oriented</span>
+        <span class="meta-pill">JVM</span>
+        <span class="meta-pill">Statically Typed</span>
+      </div>
+      <div class="card-year">1995 &mdash; James Gosling, Sun Microsystems</div>
+    </div>
+
+    <div class="lang-card card-general" data-cat="general">
+      <div class="card-top">
+        <span class="card-name">C</span>
+        <span class="card-tag tag-general">General-Purpose</span>
+      </div>
+      <p class="card-desc">One of the most influential languages ever created. C provides direct memory access and maps closely to hardware — the foundation that Unix, Linux, and countless systems are built on.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Low-Level</span>
+        <span class="meta-pill">Compiled</span>
+        <span class="meta-pill">Procedural</span>
+      </div>
+      <div class="card-year">1972 &mdash; Dennis Ritchie, Bell Labs</div>
+    </div>
+
+    <!-- DSL -->
+    <div class="lang-card card-dsl" data-cat="dsl">
+      <div class="card-top">
+        <span class="card-name">SQL</span>
+        <span class="card-tag tag-dsl">Domain-Specific</span>
+      </div>
+      <p class="card-desc">The universal language of relational databases. Declarative and expressive, SQL lets you query, insert, update, and manage structured data with minimal code across virtually every database platform.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Declarative</span>
+        <span class="meta-pill">Database Query</span>
+        <span class="meta-pill">ANSI Standard</span>
+      </div>
+      <div class="card-year">1974 &mdash; IBM Research</div>
+    </div>
+
+    <div class="lang-card card-dsl" data-cat="dsl">
+      <div class="card-top">
+        <span class="card-name">HTML</span>
+        <span class="card-tag tag-dsl">Domain-Specific</span>
+      </div>
+      <p class="card-desc">HyperText Markup Language defines the structure and semantic meaning of web content. Not a programming language — browsers parse it to build the DOM and render every page on the internet.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Markup</span>
+        <span class="meta-pill">Declarative</span>
+        <span class="meta-pill">DOM Structure</span>
+      </div>
+      <div class="card-year">1993 &mdash; Tim Berners-Lee</div>
+    </div>
+
+    <div class="lang-card card-dsl" data-cat="dsl">
+      <div class="card-top">
+        <span class="card-name">CSS</span>
+        <span class="card-tag tag-dsl">Domain-Specific</span>
+      </div>
+      <p class="card-desc">Cascading Style Sheets control the visual presentation of HTML documents — layout, typography, color, spacing, animations, and responsive behavior across devices and screen sizes.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Stylesheet</span>
+        <span class="meta-pill">Declarative</span>
+        <span class="meta-pill">Visual Styling</span>
+      </div>
+      <div class="card-year">1996 &mdash; Håkon Wium Lie, W3C</div>
+    </div>
+
+    <!-- WEB DEV -->
+    <div class="lang-card card-web" data-cat="web">
+      <div class="card-top">
+        <span class="card-name">JavaScript</span>
+        <span class="card-tag tag-web">Web Dev</span>
+      </div>
+      <p class="card-desc">The only language that runs natively in every web browser. Powers client-side interactivity and, via Node.js, full server-side development — making it the most widely deployed language on earth.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Interpreted</span>
+        <span class="meta-pill">Event-Driven</span>
+        <span class="meta-pill">Dynamic Typing</span>
+      </div>
+      <div class="card-year">1995 &mdash; Brendan Eich, Netscape</div>
+    </div>
+
+    <div class="lang-card card-web" data-cat="web">
+      <div class="card-top">
+        <span class="card-name">HTML</span>
+        <span class="card-tag tag-web">Web Dev</span>
+      </div>
+      <p class="card-desc">The structural backbone of every webpage. HTML defines headings, paragraphs, links, images, forms, and semantic landmarks that assistive technology and search engines rely on.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Markup</span>
+        <span class="meta-pill">Declarative</span>
+        <span class="meta-pill">Browser Native</span>
+      </div>
+      <div class="card-year">1993 &mdash; Tim Berners-Lee</div>
+    </div>
+
+    <div class="lang-card card-web" data-cat="web">
+      <div class="card-top">
+        <span class="card-name">CSS</span>
+        <span class="card-tag tag-web">Web Dev</span>
+      </div>
+      <p class="card-desc">Works alongside HTML to define the visual layer of websites. Modern CSS includes Grid, Flexbox, custom properties, and keyframe animations — eliminating the need for many JavaScript libraries.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Stylesheet</span>
+        <span class="meta-pill">Responsive Design</span>
+        <span class="meta-pill">Animations</span>
+      </div>
+      <div class="card-year">1996 &mdash; W3C</div>
+    </div>
+
+    <!-- MOBILE -->
+    <div class="lang-card card-mobile" data-cat="mobile">
+      <div class="card-top">
+        <span class="card-name">Swift</span>
+        <span class="card-tag tag-mobile">Mobile</span>
+      </div>
+      <p class="card-desc">Apple's modern replacement for Objective-C, designed for safety, speed, and clarity. The primary language for building iOS, macOS, watchOS, and tvOS applications natively.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Compiled</span>
+        <span class="meta-pill">Type-Safe</span>
+        <span class="meta-pill">iOS / macOS</span>
+      </div>
+      <div class="card-year">2014 &mdash; Apple Inc.</div>
+    </div>
+
+    <div class="lang-card card-mobile" data-cat="mobile">
+      <div class="card-top">
+        <span class="card-name">Kotlin</span>
+        <span class="card-tag tag-mobile">Mobile</span>
+      </div>
+      <p class="card-desc">A concise, expressive language that runs on the JVM. Google's preferred language for Android development — fully interoperable with Java while dramatically reducing boilerplate code.</p>
+      <div class="card-meta">
+        <span class="meta-pill">JVM</span>
+        <span class="meta-pill">Null Safety</span>
+        <span class="meta-pill">Android</span>
+      </div>
+      <div class="card-year">2011 &mdash; JetBrains</div>
+    </div>
+
+    <div class="lang-card card-mobile" data-cat="mobile">
+      <div class="card-top">
+        <span class="card-name">Dart</span>
+        <span class="card-tag tag-mobile">Mobile</span>
+      </div>
+      <p class="card-desc">Google's language powering the Flutter framework. Dart compiles to native ARM code for mobile and to JavaScript for web — enabling true cross-platform apps from a single codebase.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Cross-Platform</span>
+        <span class="meta-pill">Flutter</span>
+        <span class="meta-pill">AOT Compiled</span>
+      </div>
+      <div class="card-year">2011 &mdash; Google</div>
+    </div>
+
+    <!-- DATA SCIENCE -->
+    <div class="lang-card card-data" data-cat="data">
+      <div class="card-top">
+        <span class="card-name">Python</span>
+        <span class="card-tag tag-data">Data &amp; AI</span>
+      </div>
+      <p class="card-desc">The dominant language of data science and AI, backed by an unrivaled ecosystem — NumPy, Pandas, TensorFlow, and PyTorch. Also widely used for web development, scripting, and automation.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Interpreted</span>
+        <span class="meta-pill">Dynamic Typing</span>
+        <span class="meta-pill">Vast Ecosystem</span>
+      </div>
+      <div class="card-year">1991 &mdash; Guido van Rossum</div>
+    </div>
+
+    <div class="lang-card card-data" data-cat="data">
+      <div class="card-top">
+        <span class="card-name">R</span>
+        <span class="card-tag tag-data">Data &amp; AI</span>
+      </div>
+      <p class="card-desc">Built specifically for statistical computing and data visualization. The preferred language in academic research and among statisticians, with powerful packages like ggplot2 and dplyr.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Statistical Computing</span>
+        <span class="meta-pill">Data Visualization</span>
+        <span class="meta-pill">CRAN Ecosystem</span>
+      </div>
+      <div class="card-year">1993 &mdash; Ihaka &amp; Gentleman, UoA</div>
+    </div>
+
+    <div class="lang-card card-data" data-cat="data">
+      <div class="card-top">
+        <span class="card-name">Julia</span>
+        <span class="card-tag tag-data">Data &amp; AI</span>
+      </div>
+      <p class="card-desc">Designed for high-performance numerical and scientific computing. Julia achieves near-C execution speeds with Python-like syntax — popular in research, finance, and large-scale simulation.</p>
+      <div class="card-meta">
+        <span class="meta-pill">JIT Compiled</span>
+        <span class="meta-pill">High Performance</span>
+        <span class="meta-pill">Scientific Computing</span>
+      </div>
+      <div class="card-year">2012 &mdash; MIT CSAIL</div>
+    </div>
+
+    <!-- GAME DEV -->
+    <div class="lang-card card-game" data-cat="game">
+      <div class="card-top">
+        <span class="card-name">C#</span>
+        <span class="card-tag tag-game">Game Dev</span>
+      </div>
+      <p class="card-desc">The primary language of the Unity game engine, one of the most widely used platforms in game development. C# balances performance with strong tooling and developer productivity.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Unity Engine</span>
+        <span class="meta-pill">Object-Oriented</span>
+        <span class="meta-pill">.NET Runtime</span>
+      </div>
+      <div class="card-year">2000 &mdash; Microsoft</div>
+    </div>
+
+    <div class="lang-card card-game" data-cat="game">
+      <div class="card-top">
+        <span class="card-name">C++</span>
+        <span class="card-tag tag-game">Game Dev</span>
+      </div>
+      <p class="card-desc">Powers AAA game engines like Unreal Engine. C++ gives developers maximum control over hardware and memory — the go-to choice for performance-critical game systems and graphics programming.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Compiled</span>
+        <span class="meta-pill">Low-Level Control</span>
+        <span class="meta-pill">Unreal Engine</span>
+      </div>
+      <div class="card-year">1979 &mdash; Bjarne Stroustrup, Bell Labs</div>
+    </div>
+
+    <div class="lang-card card-game" data-cat="game">
+      <div class="card-top">
+        <span class="card-name">Lua</span>
+        <span class="card-tag tag-game">Game Dev</span>
+      </div>
+      <p class="card-desc">A lightweight scripting language embedded into game engines and applications worldwide. Popular in modding systems like Roblox and World of Warcraft for its simplicity, small footprint, and fast runtime.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Scripting</span>
+        <span class="meta-pill">Embeddable</span>
+        <span class="meta-pill">Lightweight</span>
+      </div>
+      <div class="card-year">1993 &mdash; PUC-Rio, Brazil</div>
+    </div>
+
+  </div>
+
+  <footer>
+    <a href="index.html">&larr; Back to Coding Language Academy</a>
+  </footer>
+
+  <script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards      = document.querySelectorAll('.lang-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          const show = filter === 'all' || card.dataset.cat === filter;
+          card.classList.toggle('hidden', !show);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,285 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>General-Purpose Programming Languages</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>General-Purpose Languages | CLA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inconsolata:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
 
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+    /* ============================================
+       DESIGN TOKENS
+    ============================================ */
+    :root {
+      --bg:            #e8eef7;
+      --bg-warm:       #dde5f2;
+      --surface:       #f2f6fc;
+      --border:        #c5d0e4;
+      --border-strong: #a3b3ce;
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to bottom, #0f172a, #1e293b); /* Normal, clean dark blue gradient */
-    color: #ffffff;
-    min-height: 100vh;
-}
+      --ink:           #0f1a2e;
+      --ink-2:         #2e3f5c;
+      --ink-3:         #6278a0;
+      --ink-4:         #9aaac4;
 
-#back-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-}
+      --accent:        #1d4ed8;
+      --accent-bg:     #dbeafe;
+      --accent-soft:   #eff4ff;
 
-#back-button button {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    border: none;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
+      --font-head: 'Syne', sans-serif;
+      --font-mono: 'Inconsolata', monospace;
+      --font-body: 'Lato', sans-serif;
+    }
 
-#back-button button:hover {
-    background: rgba(255,255,255,0.3);
-    transform: translateY(-2px);
-}
 
-header {
-    padding: 120px 20px 100px;
-    text-align: center;
-}
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html  { scroll-behavior: smooth; }
+    body  { background: var(--bg); color: var(--ink); font-family: var(--font-body); min-height: 100vh; }
 
-header h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 3.5rem;
-    margin-bottom: 24px;
-}
 
-header p {
-    max-width: 900px;
-    margin: auto;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    opacity: 0.95;
-}
+    /* ============================================
+       NAVIGATION
+    ============================================ */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      height: 54px; padding: 0 2rem;
+      background: rgba(232,238,247,0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
 
-section {
-    padding: 100px 20px;
-    max-width: 1300px;
-    margin: auto;
-}
+    .nav-logo {
+      font-family: var(--font-head); font-size: 1rem;
+      font-weight: 800; letter-spacing: 0.04em;
+      color: var(--ink); text-decoration: none; margin-right: auto;
+    }
 
-h2 {
-    font-family: 'Montserrat', sans-serif;
-    text-align: center;
-    font-size: 2.6rem;
-    margin-bottom: 60px;
-    color: #81d4fa;
-}
+    .nav-back {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--ink-3); text-decoration: none;
+      border: 1px solid var(--border-strong);
+      padding: 0.36rem 0.85rem; border-radius: 5px;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .nav-back:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
-.language-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 40px;
-}
 
-.language-card {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    transition: all 0.4s ease;
-    border: 1px solid rgba(255,255,255,0.1);
-}
+    /* ============================================
+       HEADER
+    ============================================ */
+    header {
+      max-width: 900px; margin: 0 auto;
+      padding: 4rem 2rem 2.5rem;
+      animation: fadeUp 0.45s ease both;
+    }
 
-.language-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-}
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.9rem;
+    }
 
-.language-card.php { border-top: 8px solid #8892BF; }
-.language-card.java { border-top: 8px solid #f44336; }
-.language-card.c { border-top: 8px solid #4caf50; }
+    header h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800; line-height: 1.08;
+      margin-bottom: 0.9rem;
+    }
 
-.language-image {
-    height: 180px;
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
-}
+    header h1 span { display: block; color: var(--ink-3); font-weight: 400; }
 
-.language-image img {
-    max-height: 100px;
-    max-width: 90%;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
-}
+    .header-desc {
+      font-size: 0.98rem; font-weight: 300;
+      line-height: 1.75; color: var(--ink-2);
+      max-width: 580px; margin-bottom: 2rem;
+    }
 
-.language-content {
-    padding: 35px;
-}
+    /* language jump links in header */
+    .lang-nav {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
 
-.language-content h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.8rem;
-    margin-bottom: 16px;
-}
+    .lang-nav-btn {
+      display: inline-block; text-decoration: none;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--ink-2); font-family: var(--font-mono);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.03em;
+      padding: 0.38rem 1rem; border-radius: 6px;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.12s;
+    }
+    .lang-nav-btn:hover {
+      background: var(--accent-bg); border-color: var(--accent);
+      color: var(--accent); transform: translateY(-1px);
+    }
 
-.language-card.php h3 { color: #8892BF; }
-.language-card.java h3 { color: #f44336; }
-.language-card.c h3 { color: #4caf50; }
+    .lang-nav-btn.go {
+      background: var(--accent); border-color: var(--accent);
+      color: #fff;
+    }
+    .lang-nav-btn.go:hover { opacity: 0.85; transform: translateY(-1px); }
 
-.language-content p {
-    line-height: 1.7;
-    margin-bottom: 24px;
-    opacity: 0.95;
-}
 
-.language-content button {
-    border: none;
-    padding: 14px 24px;
-    border-radius: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #fff;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
+    /* ============================================
+       MAIN LAYOUT
+    ============================================ */
+    main {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 2rem 6rem;
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
 
-.language-card.php button { background: linear-gradient(135deg, #8892BF, #5c6bc0); }
-.language-card.java button { background: linear-gradient(135deg, #f44336, #d32f2f); }
-.language-card.c button { background: linear-gradient(135deg, #4caf50, #2e7d32); }
 
-.language-content button:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-}
+    /* ============================================
+       LANGUAGE CARD
+    ============================================ */
+    .lang-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      overflow: hidden;
+      animation: fadeUp 0.4s ease both;
+      transition: box-shadow 0.18s, border-color 0.18s;
+    }
+    .lang-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); border-color: var(--border-strong); }
 
-.details {
-    margin-top: 30px;
-    background: rgba(255,255,255,0.06);
-    padding: 24px;
-    border-radius: 16px;
-}
+    .lang-card:nth-child(1) { animation-delay: 0.1s; }
+    .lang-card:nth-child(2) { animation-delay: 0.18s; }
+    .lang-card:nth-child(3) { animation-delay: 0.26s; }
 
-.details ul {
-    padding-left: 24px;
-    list-style: none;
-}
+    /* card top bar */
+    .card-head {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem;
+      padding: 1.4rem 1.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
 
-.details li {
-    margin-bottom: 12px;
-}
+    .card-title-group { flex: 1; }
 
-.details strong {
-    color: #81d4fa;
-}
+    .card-name {
+      font-family: var(--font-head); font-size: 1.5rem;
+      font-weight: 800; color: var(--ink); margin-bottom: 0.25rem;
+    }
 
-footer {
-    text-align: center;
-    padding: 60px 20px;
-    font-size: 0.95rem;
-    opacity: 0.8;
-}
-</style>
+    .card-meta-line {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      color: var(--ink-3); letter-spacing: 0.04em;
+    }
+
+    .card-open-btn {
+      flex-shrink: 0;
+      display: inline-block; text-decoration: none;
+      background: var(--accent); color: #fff;
+      font-family: var(--font-mono); font-size: 0.68rem;
+      font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.4rem 0.9rem; border-radius: 5px;
+      transition: opacity 0.15s, transform 0.12s;
+    }
+    .card-open-btn:hover { opacity: 0.82; transform: translateY(-1px); }
+
+    /* facts grid */
+    .card-facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0;
+    }
+
+    .fact {
+      padding: 1rem 1.4rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .fact:last-child { border-right: none; }
+
+    .fact-label {
+      font-family: var(--font-mono); font-size: 0.6rem;
+      font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-4); margin-bottom: 0.35rem;
+    }
+
+    .fact-value {
+      font-family: var(--font-head); font-size: 0.95rem;
+      font-weight: 700; color: var(--ink);
+    }
+
+    .fact-value.highlight { color: var(--accent); }
+
+    /* tags row */
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      padding: 1rem 1.4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .tag {
+      background: var(--accent-bg); color: var(--accent);
+      font-family: var(--font-mono); font-size: 0.63rem;
+      font-weight: 600; letter-spacing: 0.08em;
+      padding: 0.2rem 0.55rem; border-radius: 4px;
+    }
+
+
+    .code-label {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-4); padding: 0.6rem 1.4rem 0.3rem;
+    }
+
+    pre {
+      background: var(--ink); color: #c9d8f0;
+      font-family: var(--font-mono); font-size: 0.82rem;
+      line-height: 1.6; padding: 0.9rem 1.4rem 1.2rem;
+      overflow-x: auto; margin: 0;
+    }
+
+    /* reference links */
+    .card-refs {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      padding: 1rem 1.4rem;
+      border-top: 1px solid var(--border);
+      background: var(--accent-soft);
+    }
+
+    .ref-label {
+      font-family: var(--font-mono); font-size: 0.6rem;
+      font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-4); width: 100%; margin-bottom: 0.1rem;
+    }
+
+    .ref-link {
+      display: inline-block; text-decoration: none;
+      font-family: var(--font-mono); font-size: 0.7rem;
+      font-weight: 600; color: var(--accent);
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 0.25rem 0.65rem; border-radius: 4px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .ref-link:hover { background: var(--accent-bg); border-color: var(--accent); }
+
+    .ref-link.placeholder {
+      color: var(--ink-4); border-style: dashed;
+      cursor: default; pointer-events: none;
+    }
+
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      border-top: 1px solid var(--border); padding: 1.6rem 2rem;
+      text-align: center; color: var(--ink-4);
+      font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em;
+    }
+    footer a { color: var(--ink-2); text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+
+
+    /* ============================================
+       ANIMATIONS
+    ============================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+  </style>
 </head>
-
 <body>
 
-<div id="back-button">
-    <button onclick="window.location.href='index.html';">← Back</button>
-</div>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">CLA</a>
+    <a class="nav-back" href="index.html">&larr; Categories</a>
+  </nav>
 
-<header>
-    <h1>General-Purpose Programming Languages</h1>
-    <p>
-        General-purpose programming languages are versatile tools designed to solve a wide variety of problems — 
-        from building dynamic websites and enterprise systems to powering operating systems and high-performance applications.
-    </p>
-</header>
-
-<section>
-    <h2>Explore the Languages</h2>
-
-    <div class="language-grid">
-
-        <!-- PHP -->
-        <div class="language-card php">
-            <div class="language-image">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="PHP Logo">
-            </div>
-            <div class="language-content">
-                <h3>PHP</h3>
-                <p>
-                    PHP is a popular server-side scripting language especially suited for web development, 
-                    powering millions of websites with seamless database integration.
-                </p>
-                <button onclick="window.location.href='PHP.html';">Learn More</button>
-                <div class="details">
-                    <ul>
-                        <li><strong>Primary Use:</strong> Backend Web Development</li>
-                        <li><strong>Paradigm:</strong> Procedural / Object-Oriented / Scripting</li>
-                        <li><strong>Strength:</strong> Database integration & rapid prototyping</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Java -->
-        <div class="language-card java">
-            <div class="language-image">
-                <img src="https://download.logo.wine/logo/Java_(programming_language)/Java_(programming_language)-Logo.wine.png" alt="Java Logo">
-            </div>
-            <div class="language-content">
-                <h3>Java</h3>
-                <p>
-                    Java is a robust, high-level, object-oriented language famous for its platform independence 
-                    via the Java Virtual Machine ("write once, run anywhere").
-                </p>
-                <button onclick="window.location.href='JAVA.html';">Learn More</button>
-                <div class="details">
-                    <ul>
-                        <li><strong>Primary Use:</strong> Enterprise Applications & Android Development</li>
-                        <li><strong>Paradigm:</strong> Object-Oriented</li>
-                        <li><strong>Strength:</strong> Platform independence & vast ecosystem</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- C -->
-        <div class="language-card c">
-            <div class="language-image">
-                <img src="https://www.vhv.rs/dpng/d/80-805562_c-programming-language-icon-hd-png-download.png" alt="C Logo">
-            </div>
-            <div class="language-content">
-                <h3>C</h3>
-                <p>
-                    C is a foundational procedural language offering direct memory control and maximum performance, 
-                    influencing many modern languages and systems.
-                </p>
-                <button onclick="window.location.href='C.html';">Learn More</button>
-                <div class="details">
-                    <ul>
-                        <li><strong>Primary Use:</strong> Systems & Embedded Programming</li>
-                        <li><strong>Paradigm:</strong> Procedural</li>
-                        <li><strong>Strength:</strong> Speed, efficiency & low-level control</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
+  <!-- HEADER -->
+  <header>
+    <p class="eyebrow">Category &mdash; General-Purpose</p>
+    <h1>General-Purpose<span>Languages</span></h1>
+    <p class="header-desc">The multi-tools of programming. Unlike domain-specific languages built for one job, GPLs have the flexibility to build almost anything — from operating systems and web servers to mobile apps and games.</p>
+    <div class="lang-nav">
+      <a class="lang-nav-btn" href="#php">PHP</a>
+      <a class="lang-nav-btn" href="#java">Java</a>
+      <a class="lang-nav-btn" href="#c">C</a>
     </div>
-</section>
+  </header>
 
-<footer>
-© 2026 • General-Purpose Programming Languages Project
-</footer>
+  <!-- CARDS -->
+  <main>
+
+    <!-- PHP -->
+    <article class="lang-card" id="php">
+      <div class="card-head">
+        <div class="card-title-group">
+          <div class="card-name">PHP</div>
+          <div class="card-meta-line">Hypertext Preprocessor &mdash; 1994</div>
+        </div>
+        <a class="card-open-btn" href="PHP.html">Full Page &rarr;</a>
+      </div>
+
+      <div class="card-facts">
+        <div class="fact">
+          <div class="fact-label">Created By</div>
+          <div class="fact-value">Rasmus Lerdorf</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Paradigm</div>
+          <div class="fact-value">OOP &amp; Imperative</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Typing</div>
+          <div class="fact-value">Dynamic</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Web Usage</div>
+          <div class="fact-value highlight">~77% of sites</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Runtime</div>
+          <div class="fact-value">Interpreted</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">File Ext.</div>
+          <div class="fact-value">.php</div>
+        </div>
+      </div>
+
+      <div class="card-tags">
+        <span class="tag">Server-Side</span>
+        <span class="tag">Web Development</span>
+        <span class="tag">CMS Ecosystem</span>
+        <span class="tag">Open Source</span>
+        <span class="tag">Embedded in HTML</span>
+      </div>
+
+      <div class="card-refs">
+        <div class="ref-label">References &amp; Links</div>
+        <a class="ref-link" href="https://www.php.net/docs.php" target="_blank">Official Docs</a>
+        <a class="ref-link" href="https://www.w3schools.com/php/" target="_blank">W3Schools</a>
+        <a class="ref-link placeholder" href="#">Your Link Here</a>
+        <a class="ref-link placeholder" href="#">Your Link Here</a>
+      </div>
+    </article>
+
+
+    <!-- JAVA -->
+    <article class="lang-card" id="java">
+      <div class="card-head">
+        <div class="card-title-group">
+          <div class="card-name">Java</div>
+          <div class="card-meta-line">Write Once, Run Anywhere &mdash; 1995</div>
+        </div>
+        <a class="card-open-btn" href="JAVA.html">Full Page &rarr;</a>
+      </div>
+
+      <div class="card-facts">
+        <div class="fact">
+          <div class="fact-label">Created By</div>
+          <div class="fact-value">James Gosling</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Paradigm</div>
+          <div class="fact-value">OOP, Class-Based</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Typing</div>
+          <div class="fact-value">Static</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Runs On</div>
+          <div class="fact-value highlight">JVM</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Runtime</div>
+          <div class="fact-value">Compiled → Bytecode</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">File Ext.</div>
+          <div class="fact-value">.java</div>
+        </div>
+      </div>
+
+      <div class="card-tags">
+        <span class="tag">Enterprise</span>
+        <span class="tag">Android</span>
+        <span class="tag">Cross-Platform</span>
+        <span class="tag">JVM Ecosystem</span>
+        <span class="tag">Backend</span>
+      </div>
+
+      <div class="card-refs">
+        <div class="ref-label">References &amp; Links</div>
+        <a class="ref-link" href="https://docs.oracle.com/en/java/" target="_blank">Oracle Docs</a>
+        <a class="ref-link" href="https://www.w3schools.com/java/" target="_blank">W3Schools</a>
+        <a class="ref-link placeholder" href="#">Your Link Here</a>
+        <a class="ref-link placeholder" href="#">Your Link Here</a>
+      </div>
+    </article>
+
+
+    <!-- C -->
+    <article class="lang-card" id="c">
+      <div class="card-head">
+        <div class="card-title-group">
+          <div class="card-name">C</div>
+          <div class="card-meta-line">Systems Programming Language &mdash; 1972</div>
+        </div>
+        <a class="card-open-btn" href="C.html">Full Page &rarr;</a>
+      </div>
+
+      <div class="card-facts">
+        <div class="fact">
+          <div class="fact-label">Created By</div>
+          <div class="fact-value">Dennis Ritchie</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Paradigm</div>
+          <div class="fact-value">Procedural</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Typing</div>
+          <div class="fact-value">Static, Weak</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Memory</div>
+          <div class="fact-value highlight">Manual</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Runtime</div>
+          <div class="fact-value">Compiled</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">File Ext.</div>
+          <div class="fact-value">.c / .h</div>
+        </div>
+      </div>
+
+      <div class="card-tags">
+        <span class="tag">Low-Level</span>
+        <span class="tag">Operating Systems</span>
+        <span class="tag">Embedded Systems</span>
+        <span class="tag">High Performance</span>
+        <span class="tag">Foundation Language</span>
+      </div>
+
+      <div class="card-refs">
+        <div class="ref-label">References &amp; Links</div>
+        <a class="ref-link" href="https://devdocs.io/c/" target="_blank">DevDocs C</a>
+        <a class="ref-link" href="https://www.w3schools.com/c/" target="_blank">W3Schools</a>
+        <a class="ref-link placeholder" href="#">Your Link Here</a>
+        <a class="ref-link placeholder" href="#">Your Link Here</a>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    Coding Language Academy &mdash;
+    <a href="index.html">Return to Home</a>
+  </footer>
 
 </body>
 </html>
